@@ -9,6 +9,7 @@ public interface CVector {
 
   /**
    * Returns the complex at the index i
+   *
    * @param i the index
    * @return the i-th complex
    */
@@ -16,13 +17,15 @@ public interface CVector {
 
   /**
    * Sets the complex at the index o
-   * @param i the index
+   *
+   * @param i     the index
    * @param value the value to set
    */
   void setAt(int i, Complex value);
 
   /**
    * Returns the size of the vector
+   *
    * @return the size of the vector
    */
   int getSize();

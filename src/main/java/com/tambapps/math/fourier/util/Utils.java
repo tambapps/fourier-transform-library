@@ -20,6 +20,7 @@ public final class Utils {
 
   /**
    * Returns the exponent of a power of two
+   *
    * @param x the power of two
    * @return the corresponding 2-exponent
    * @throws IllegalArgumentException if the argument is not a power of two
@@ -34,6 +35,7 @@ public final class Utils {
 
   /**
    * Returns whether a number is a power of two
+   *
    * @param x a number
    * @return whether it is a power of two
    */

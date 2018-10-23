@@ -12,8 +12,9 @@ class ThresholdFilter extends AbstractFilter {
 
   /**
    * Creates a threshold filter
-   * @param threshold the threshold
-   * @param filterLower  whether to filter values lower or greater than the threshold
+   *
+   * @param threshold   the threshold
+   * @param filterLower whether to filter values lower or greater than the threshold
    */
   ThresholdFilter(double threshold, boolean filterLower) {
     this.threshold = threshold;

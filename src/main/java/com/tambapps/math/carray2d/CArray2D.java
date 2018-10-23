@@ -20,6 +20,7 @@ public class CArray2D {
 
   /**
    * Creates a 2D array of size M, N
+   *
    * @param M the number of rows
    * @param N the number of columns
    */
@@ -29,8 +30,9 @@ public class CArray2D {
 
   /**
    * Creates a 2D array of size M, N with the given values.
-   * @param M the number of rows
-   * @param N the number of columns
+   *
+   * @param M      the number of rows
+   * @param N      the number of columns
    * @param values the values
    */
   public CArray2D(int M, int N, Complex[] values) {
@@ -50,6 +52,7 @@ public class CArray2D {
 
   /**
    * Get the complex number at the index [row][col]
+   *
    * @param row the row
    * @param col the col
    * @return the complex at the given indexes
@@ -61,6 +64,7 @@ public class CArray2D {
 
   /**
    * Get the i-th column.
+   *
    * @param i the column index
    * @return the i-th column
    */
@@ -71,6 +75,7 @@ public class CArray2D {
   /**
    * Get the complex number at the index i, a 1D index.
    * i = row * N + col
+   *
    * @param i the 1d index
    * @return the complex at the given index
    */
@@ -81,6 +86,7 @@ public class CArray2D {
 
   /**
    * Sets the complex at the index [row][col]
+   *
    * @param row the row
    * @param col the col
    */
@@ -92,6 +98,7 @@ public class CArray2D {
   /**
    * Sets the complex number at the index i, a 1D index.
    * i = row * N + col
+   *
    * @param i the column index
    */
   public void set(int i, Complex value) {
@@ -120,6 +127,7 @@ public class CArray2D {
 
   /**
    * Returns the number of rows
+   *
    * @return the number of rows
    */
   public int getM() {
@@ -128,6 +136,7 @@ public class CArray2D {
 
   /**
    * Returns the number of columns
+   *
    * @return the number of columns
    */
   public int getN() {
@@ -136,6 +145,7 @@ public class CArray2D {
 
   /**
    * Returns the row at the index i
+   *
    * @param i the index
    * @return the i-th row
    */
@@ -149,6 +159,7 @@ public class CArray2D {
 
   /**
    * Returns the column at the index i
+   *
    * @param i the index
    * @return the i-th column
    */
@@ -188,6 +199,7 @@ public class CArray2D {
 
   /**
    * Returns a copy of this array
+   *
    * @return the copy
    */
   public CArray2D copy() {
@@ -199,6 +211,7 @@ public class CArray2D {
 
   /**
    * Returns an immutable copy of this array
+   *
    * @return the copy
    */
   public CArray2D immutableCopy() {
@@ -225,6 +238,7 @@ public class CArray2D {
     }
   }
 
+
   private class Column extends AbstractCVector {
     final int c;
 
@@ -247,6 +261,7 @@ public class CArray2D {
       return getM();
     }
   }
+
 
   private class Row extends AbstractCVector {
     private int r;

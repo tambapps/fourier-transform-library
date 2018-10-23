@@ -13,8 +13,9 @@ class RectangleFilter extends AbstractFilter {
 
   /**
    * Creates a rectangle filter with the given width and height
-   * @param width the filter's width
-   * @param height the filter's height
+   *
+   * @param width    the filter's width
+   * @param height   the filter's height
    * @param filterIn whether to filter in or out the rectangle
    */
   RectangleFilter(int width, int height, boolean filterIn) {

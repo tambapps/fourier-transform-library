@@ -15,7 +15,7 @@ class CircleFilter extends AbstractFilter {
   /**
    * Creates a circle filter with the given radius.
    *
-   * @param radius the radius of the filter
+   * @param radius   the radius of the filter
    * @param filterIn whether to filter in or out the circle
    */
   CircleFilter(int radius, boolean filterIn) {

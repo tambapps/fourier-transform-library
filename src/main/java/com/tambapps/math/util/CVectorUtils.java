@@ -9,6 +9,7 @@ public class CVectorUtils {
 
   /**
    * Creates an immutable vector with the given complex numbers
+   *
    * @param values values to put in the vector
    * @return an immutable vector
    */
@@ -18,6 +19,7 @@ public class CVectorUtils {
 
   /**
    * Copy a vector onto another
+   *
    * @param src the source vector
    * @param dst the destination vector
    */
