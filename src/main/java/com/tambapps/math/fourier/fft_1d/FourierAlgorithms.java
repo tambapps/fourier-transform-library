@@ -11,6 +11,8 @@ import com.tambapps.math.util.CVectorUtils;
  */
 public final class FourierAlgorithms {
 
+  private FourierAlgorithms() {}
+
   public static final FFTAlgorithm BASIC = new AbstractFFTAlgorithm() {
     @Override
     public void compute(CVector vector) {
@@ -73,7 +75,6 @@ public final class FourierAlgorithms {
     }
   };
 
-  private FourierAlgorithms() {}
 
   /**
    * The basic algorithm for the FFT

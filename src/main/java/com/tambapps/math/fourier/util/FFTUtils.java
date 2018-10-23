@@ -1,6 +1,6 @@
 package com.tambapps.math.fourier.util;
 
-import com.tambapps.math.array_2d.CArray2D;
+import com.tambapps.math.carray2d.CArray2D;
 import com.tambapps.math.complex.Complex;
 
 /**

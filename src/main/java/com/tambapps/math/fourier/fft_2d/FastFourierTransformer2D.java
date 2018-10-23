@@ -1,6 +1,6 @@
 package com.tambapps.math.fourier.fft_2d;
 
-import com.tambapps.math.array_2d.CArray2D;
+import com.tambapps.math.carray2d.CArray2D;
 import com.tambapps.math.fourier.fft_1d.FFTAlgorithm;
 import com.tambapps.math.fourier.fft_1d.FourierAlgorithms;
 import com.tambapps.math.fourier.util.Utils;

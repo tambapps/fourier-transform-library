@@ -1,6 +1,6 @@
 package com.tambapps.math.fourier.filtering;
 
-import com.tambapps.math.array_2d.CArray2D;
+import com.tambapps.math.carray2d.CArray2D;
 import com.tambapps.math.complex.Complex;
 
 abstract class AbstractFilter implements Filter {

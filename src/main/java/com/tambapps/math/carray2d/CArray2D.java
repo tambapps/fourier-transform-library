@@ -1,4 +1,4 @@
-package com.tambapps.math.array_2d;
+package com.tambapps.math.carray2d;
 
 import com.tambapps.math.complex.Complex;
 import com.tambapps.math.util.AbstractCVector;
