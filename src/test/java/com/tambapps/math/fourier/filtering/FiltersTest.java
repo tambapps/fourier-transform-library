@@ -9,7 +9,7 @@ import org.junit.Test;
 public class FiltersTest {
 
   @Test
-  public void retangleFilterTest() {
+  public void rectangleFilterTest() {
     int N = 10;
     CArray2D array = new CArray2D(N, N);
     for (int i = 0; i < array.getN() * array.getM(); i++) {
