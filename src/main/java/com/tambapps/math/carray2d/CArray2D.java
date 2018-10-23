@@ -6,20 +6,33 @@ import com.tambapps.math.util.CVector;
 
 import java.util.Arrays;
 
+/**
+ * A complex 2-dimensional array of size M, N.
+ * M is the number of rows, N is the number of columns
+ */
 public class CArray2D {
 
-  //M = nb of rows (= column size)
-  //N = nb of columns (= row size)
   private final Column[] columns;
   private final Row[] rows;
 
   //we store the 2D array in a 1D array of size N * M
   private final Complex[] array;
 
+  /**
+   * Creates a 2D array of size M, N
+   * @param M the number of rows
+   * @param N the number of columns
+   */
   public CArray2D(int M, int N) {
     this(M, N, new Complex[M * N]);
   }
 
+  /**
+   * Creates a 2D array of size M, N with the given values.
+   * @param M the number of rows
+   * @param N the number of columns
+   * @param values the values
+   */
   public CArray2D(int M, int N, Complex[] values) {
     if (values.length != M * N) {
       throw new IllegalArgumentException("Array should be of size N * M: " + M * N);
@@ -35,29 +48,52 @@ public class CArray2D {
     }
   }
 
+  /**
+   * Get the complex number at the index [row][col]
+   * @param row the row
+   * @param col the col
+   * @return the complex at the given indexes
+   */
   public Complex get(int row, int col) {
     checkIndex(row, col);
     return array[getIndex(row, col)];
   }
 
+  /**
+   * Get the i-th column.
+   * @param i the column index
+   * @return the i-th column
+   */
   CVector getAt(int i) {
-    if (i >= rows.length) {
-      throw new IndexOutOfBoundsException(
-          String.format("Tried to access row (%d) of array of size (%d, %d)", i, getM(), getN()));
-    }
-    return rows[i];
+    return getRow(i);
   }
 
+  /**
+   * Get the complex number at the index i, a 1D index.
+   * i = row * N + col
+   * @param i the 1d index
+   * @return the complex at the given index
+   */
   public Complex get(int i) {
     checkIndex(i);
     return array[i];
   }
 
+  /**
+   * Sets the complex at the index [row][col]
+   * @param row the row
+   * @param col the col
+   */
   public void set(int row, int col, Complex value) {
     checkIndex(row, col);
     array[getIndex(row, col)] = value;
   }
 
+  /**
+   * Sets the complex number at the index i, a 1D index.
+   * i = row * N + col
+   * @param i the column index
+   */
   public void set(int i, Complex value) {
     checkIndex(i);
     array[i] = value;
@@ -82,19 +118,45 @@ public class CArray2D {
     return row * getN() + col;
   }
 
+  /**
+   * Returns the number of rows
+   * @return the number of rows
+   */
   public int getM() {
     return rows.length;
   }
 
+  /**
+   * Returns the number of columns
+   * @return the number of columns
+   */
   public int getN() {
     return columns.length;
   }
 
-  public Row getRow(int i) {
+  /**
+   * Returns the row at the index i
+   * @param i the index
+   * @return the i-th row
+   */
+  public CVector getRow(int i) {
+    if (i >= rows.length) {
+      throw new IndexOutOfBoundsException(
+          String.format("Tried to access row %d of array of size (%d, %d)", i, getM(), getN()));
+    }
     return rows[i];
   }
 
-  public Column getColumn(int i) {
+  /**
+   * Returns the column at the index i
+   * @param i the index
+   * @return the i-th column
+   */
+  public CVector getColumn(int i) {
+    if (i >= columns.length) {
+      throw new IndexOutOfBoundsException(
+          String.format("Tried to access column %d of array of size (%d, %d)", i, getM(), getN()));
+    }
     return columns[i];
   }
 
@@ -124,6 +186,10 @@ public class CArray2D {
     return Arrays.equals(array, a.array);
   }
 
+  /**
+   * Returns a copy of this array
+   * @return the copy
+   */
   public CArray2D copy() {
     int size = getM() * getN();
     Complex[] copyArray = new Complex[size];
@@ -131,6 +197,10 @@ public class CArray2D {
     return new CArray2D(getM(), getN(), copyArray);
   }
 
+  /**
+   * Returns an immutable copy of this array
+   * @return the copy
+   */
   public CArray2D immutableCopy() {
     int size = getM() * getN();
     Complex[] copyArray = new Complex[size];
@@ -138,8 +208,7 @@ public class CArray2D {
     return new ImmutableC2D(getM(), getN(), copyArray);
   }
 
-
-  static class ImmutableC2D extends CArray2D {
+  private static class ImmutableC2D extends CArray2D {
 
     ImmutableC2D(int M, int N, Complex[] values) {
       super(M, N, values);
@@ -155,7 +224,6 @@ public class CArray2D {
       throw new UnsupportedOperationException("Cannot modify values of immutable array");
     }
   }
-
 
   private class Column extends AbstractCVector {
     final int c;
@@ -179,7 +247,6 @@ public class CArray2D {
       return getM();
     }
   }
-
 
   private class Row extends AbstractCVector {
     private int r;

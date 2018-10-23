@@ -3,18 +3,24 @@ package com.tambapps.math.fourier.filtering;
 import com.tambapps.math.complex.Complex;
 
 /**
- * A circle filter. Let in/out, values that are inside a centered circle
+ * A circle filter. Filters values that are in/out a centered circle
  */
 class CircleFilter extends AbstractFilter {
 
   private final int radius2;
-  private final boolean reverted;
+  private final boolean filterIn;
   private int cM;
   private int cN;
 
-  CircleFilter(int radius, boolean reverted) {
+  /**
+   * Creates a circle filter with the given radius.
+   *
+   * @param radius the radius of the filter
+   * @param filterIn whether to filter in or out the circle
+   */
+  CircleFilter(int radius, boolean filterIn) {
     this.radius2 = pow2(radius);
-    this.reverted = reverted;
+    this.filterIn = filterIn;
   }
 
   @Override
@@ -27,9 +33,9 @@ class CircleFilter extends AbstractFilter {
   Complex apply(Complex c, int i, int j, int M, int N) {
     int distance2 = pow2(i - cM) + pow2(j - cN);
     if (distance2 < radius2) {
-      return reverted ? c : Complex.ZERO;
+      return filterIn ? c : Complex.ZERO;
     }
-    return reverted ? Complex.ZERO : c;
+    return filterIn ? Complex.ZERO : c;
   }
 
   private int pow2(int i) {

@@ -5,7 +5,7 @@ import com.tambapps.math.fourier.fft_1d.FFTAlgorithm;
 /**
  * Class that choose a FFT Algorithm given a 2D array size
  */
-interface AlgorithmChooser {
+public interface AlgorithmChooser {
 
   /**
    * Get an algorithm given the dimensions of a 2D array

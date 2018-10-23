@@ -2,6 +2,9 @@ package com.tambapps.math.util;
 
 import com.tambapps.math.complex.Complex;
 
+/**
+ * Complex vector where vectors are stored in an array
+ */
 public class ArrayCVector extends AbstractCVector {
 
   private final Complex[] values;

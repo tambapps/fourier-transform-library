@@ -30,6 +30,10 @@ public class FastFourierTransformer2D {
   private final ExecutorCompletionService<Boolean> executorService;
   private AlgorithmChooser chooser;
 
+  public FastFourierTransformer2D(ExecutorService executor) {
+    this(executor, Runtime.getRuntime().availableProcessors() + 1);
+  }
+
   public FastFourierTransformer2D(ExecutorService executor, int maxThreads) {
     executorService = new ExecutorCompletionService<>(executor);
     this.maxThreads = maxThreads;
@@ -76,9 +80,7 @@ public class FastFourierTransformer2D {
     for (int i = 0; i < count; i++) {
       try {
         executorService.take().get();
-      } catch (InterruptedException e) {
-        success = false;
-      } catch (ExecutionException e) {
+      } catch (InterruptedException | ExecutionException e) {
         success = false;
       }
     }
