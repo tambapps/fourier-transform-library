@@ -3,7 +3,7 @@ package com.tambapps.math.fourier.filtering;
 import com.tambapps.math.carray2d.CArray2D;
 import com.tambapps.math.complex.Complex;
 
-abstract class AbstractFilter implements Filter {
+public abstract class AbstractFilter implements Filter {
 
   @Override
   public final void apply(CArray2D array) {
