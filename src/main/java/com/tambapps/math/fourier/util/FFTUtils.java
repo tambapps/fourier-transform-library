@@ -13,6 +13,7 @@ public class FFTUtils {
 
   /**
    * Changes the center of the Fourier Transform
+   *
    * @param array the FT
    */
   public static void changeCenter(CArray2D array) {
@@ -32,7 +33,8 @@ public class FFTUtils {
 
   /**
    * Makes a padded copy of the given array
-   * @param array an array of values
+   *
+   * @param array   an array of values
    * @param padding the padding wanted
    * @return the padded copy of the given array
    */
@@ -73,7 +75,8 @@ public class FFTUtils {
 
   /**
    * Makes an unpadded copy of the given array
-   * @param array an array of values
+   *
+   * @param array   an array of values
    * @param padding the padding wanted
    * @return the unpadded copy of the given array
    */

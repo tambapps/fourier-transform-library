@@ -5,7 +5,8 @@ package com.tambapps.math.fourier.filtering;
  */
 public final class Filters {
 
-  private Filters() {}
+  private Filters() {
+  }
 
   public static Filter rectangle(int width, int height, boolean inverted) {
     return new RectangleFilter(width, height, inverted);

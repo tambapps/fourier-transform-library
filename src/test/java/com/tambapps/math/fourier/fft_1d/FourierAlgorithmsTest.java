@@ -55,7 +55,7 @@ public class FourierAlgorithmsTest {
 
   @Test
   public void inverseTest() {
-    for (FFTAlgorithm algorithm : new FFTAlgorithm[]{FourierAlgorithms.CT_ITERATIVE,
+    for (FFTAlgorithm algorithm : new FFTAlgorithm[] {FourierAlgorithms.CT_ITERATIVE,
         FourierAlgorithms.BASIC, FourierAlgorithms.CT_RECURSIVE}) {
       CVector result = new ArrayCVector(expected.getSize());
       CVectorUtils.copy(expected, result);

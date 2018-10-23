@@ -21,6 +21,19 @@ public class Complex {
     this.imaginary = imaginary;
   }
 
+  public static Complex of(double real, double imaginary) {
+    return new Complex(real, imaginary);
+  }
+
+  public static Complex of(double real) {
+    return new Complex(real, 0d);
+  }
+
+  //exp(i*x)
+  public static Complex expI(double x) {
+    return of(Math.cos(x), Math.sin(x));
+  }
+
   public boolean isPureImaginary() {
     return equal(0d, real);
   }
@@ -101,19 +114,6 @@ public class Complex {
       }
     }
     return builder.toString();
-  }
-
-  public static Complex of(double real, double imaginary) {
-    return new Complex(real, imaginary);
-  }
-
-  public static Complex of(double real) {
-    return new Complex(real, 0d);
-  }
-
-  //exp(i*x)
-  public static Complex expI(double x) {
-    return of(Math.cos(x), Math.sin(x));
   }
 
   @Override

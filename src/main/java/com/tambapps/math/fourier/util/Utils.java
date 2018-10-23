@@ -3,7 +3,8 @@ package com.tambapps.math.fourier.util;
 
 public final class Utils {
 
-  private Utils() {}
+  private Utils() {
+  }
 
   private static Integer doGet2Exponent(int x) {
     int power = 0;

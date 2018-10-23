@@ -20,7 +20,9 @@ public class FastFourierTransformer2D {
   public static final AlgorithmChooser DEFAULT_CHOOSER = new AlgorithmChooser() {
     @Override
     public FFTAlgorithm getAlgorithm(int M, int N) {
-      return Utils.is2Power(M) && Utils.is2Power(N) ? FourierAlgorithms.CT_RECURSIVE : FourierAlgorithms.BASIC;
+      return Utils.is2Power(M) && Utils.is2Power(N) ?
+          FourierAlgorithms.CT_RECURSIVE :
+          FourierAlgorithms.BASIC;
     }
   };
 
@@ -83,6 +85,11 @@ public class FastFourierTransformer2D {
 
     return success;
   }
+
+  public void setChooser(AlgorithmChooser chooser) {
+    this.chooser = chooser;
+  }
+
 
   private abstract class FourierTask implements Callable<Boolean> {
 
@@ -149,10 +156,6 @@ public class FastFourierTransformer2D {
       FourierAlgorithms.INVERSE.compute(vector, algorithm);
     }
 
-  }
-
-  public void setChooser(AlgorithmChooser chooser) {
-    this.chooser = chooser;
   }
 
 }

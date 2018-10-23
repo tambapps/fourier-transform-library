@@ -11,8 +11,6 @@ import com.tambapps.math.util.CVectorUtils;
  */
 public final class FourierAlgorithms {
 
-  private FourierAlgorithms() {}
-
   public static final FFTAlgorithm BASIC = new AbstractFFTAlgorithm() {
     @Override
     public void compute(CVector vector) {
@@ -29,7 +27,6 @@ public final class FourierAlgorithms {
       return "Compute the sums like in the basic FFT formula";
     }
   };
-
   //Cooley-Tukey algorithms (image sizes must be a power of two)
   public static final FFTAlgorithm CT_RECURSIVE = new AbstractFFTAlgorithm() {
     @Override
@@ -63,18 +60,20 @@ public final class FourierAlgorithms {
       return "Cooley-Tukey algorithm implemented iteratively (input array must have power of 2 sizes)";
     }
   };
-
   public static final FFITAlgorithm INVERSE = new FFITAlgorithm() {
     @Override
     public void compute(CVector vector, FFTAlgorithm algorithm) {
       inverse(vector, algorithm);
     }
 
-    @Override public void call(CVector vector, FFTAlgorithm algorithm) {
+    @Override
+    public void call(CVector vector, FFTAlgorithm algorithm) {
       compute(vector, algorithm);
     }
   };
 
+  private FourierAlgorithms() {
+  }
 
   /**
    * The basic algorithm for the FFT
@@ -100,14 +99,15 @@ public final class FourierAlgorithms {
     CVectorUtils.copy(result, vector);
   }
 
-    /**
-     * Compute the 1D FFT in the given vector
-     * with the iterative Cooley-Tukey algorithm
-     * The computation is made in the given vector
-     * (not very precise for large 2D arrays)
-     * @param vector the discrete function to compute the DFT
-     * @link from https://rosettacode.org/wiki/Fast_Fourier_transform#Java
-     */
+  /**
+   * Compute the 1D FFT in the given vector
+   * with the iterative Cooley-Tukey algorithm
+   * The computation is made in the given vector
+   * (not very precise for large 2D arrays)
+   *
+   * @param vector the discrete function to compute the DFT
+   * @link from https://rosettacode.org/wiki/Fast_Fourier_transform#Java
+   */
   private static void iterativeFFT(CVector vector) {
     int n = vector.getSize();
 
@@ -213,7 +213,8 @@ public final class FourierAlgorithms {
 
   /**
    * Inverse a Fourier Transformed vector with a given FFT algorithm
-   * @param vector the vector to inverse
+   *
+   * @param vector    the vector to inverse
    * @param algorithm the FFT algorithm used in the inverse
    */
   private static void inverse(CVector vector, FFTAlgorithm algorithm) {

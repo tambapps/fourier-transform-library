@@ -9,6 +9,7 @@ public class DoubleTester {
 
   /**
    * Tells weither 2 doubles are equals given a threshold
+   *
    * @param d1 the 1st number
    * @param d2 the 2nd number
    * @return weither the 2 numbers are equals
@@ -19,6 +20,7 @@ public class DoubleTester {
 
   /**
    * Sets the value of the threshold
+   *
    * @param threshold the new value to be set
    */
   public static void setThreshold(double threshold) {

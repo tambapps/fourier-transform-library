@@ -64,9 +64,10 @@ public class CArray2D {
   }
 
   private void checkIndex(int row, int col) {
-    if (row < 0 || row  >= getM() || col < 0 || col >= getN()) {
+    if (row < 0 || row >= getM() || col < 0 || col >= getN()) {
       throw new IndexOutOfBoundsException(String
-          .format("Tried to access index (%d, %d) of array of size (%d, %d)", row, col, getM(), getN()));
+          .format("Tried to access index (%d, %d) of array of size (%d, %d)", row, col, getM(),
+              getN()));
     }
   }
 
@@ -97,52 +98,6 @@ public class CArray2D {
     return columns[i];
   }
 
-  private class Column extends AbstractCVector {
-    final int c;
-
-    Column(int c) {
-      this.c = c;
-    }
-
-    @Override
-    public Complex getAt(int i) {
-      return get(i, c);
-    }
-
-    @Override
-    public void setAt(int i, Complex value) {
-      set(i, c, value);
-    }
-
-    @Override
-    public int getSize() {
-      return getM();
-    }
-  }
-
-  private class Row extends AbstractCVector {
-    private int r;
-
-    Row(int r) {
-      this.r = r;
-    }
-
-    @Override
-    public Complex getAt(int i) {
-      return get(r, i);
-    }
-
-    @Override
-    public void setAt(int i, Complex value) {
-      set(r, i, value);
-    }
-
-    @Override
-    public int getSize() {
-      return getN();
-    }
-  }
-
   @Override
   public String toString() {
     StringBuilder stringBuilder = new StringBuilder().append("(")
@@ -158,7 +113,7 @@ public class CArray2D {
 
   @Override
   public boolean equals(Object o) {
-    if (! (o instanceof CArray2D)) {
+    if (!(o instanceof CArray2D)) {
       return false;
     }
     CArray2D a = (CArray2D) o;
@@ -183,6 +138,7 @@ public class CArray2D {
     return new ImmutableC2D(getM(), getN(), copyArray);
   }
 
+
   static class ImmutableC2D extends CArray2D {
 
     ImmutableC2D(int M, int N, Complex[] values) {
@@ -197,6 +153,54 @@ public class CArray2D {
     @Override
     public void set(int row, int col, Complex value) {
       throw new UnsupportedOperationException("Cannot modify values of immutable array");
+    }
+  }
+
+
+  private class Column extends AbstractCVector {
+    final int c;
+
+    Column(int c) {
+      this.c = c;
+    }
+
+    @Override
+    public Complex getAt(int i) {
+      return get(i, c);
+    }
+
+    @Override
+    public void setAt(int i, Complex value) {
+      set(i, c, value);
+    }
+
+    @Override
+    public int getSize() {
+      return getM();
+    }
+  }
+
+
+  private class Row extends AbstractCVector {
+    private int r;
+
+    Row(int r) {
+      this.r = r;
+    }
+
+    @Override
+    public Complex getAt(int i) {
+      return get(r, i);
+    }
+
+    @Override
+    public void setAt(int i, Complex value) {
+      set(r, i, value);
+    }
+
+    @Override
+    public int getSize() {
+      return getN();
     }
   }
 }

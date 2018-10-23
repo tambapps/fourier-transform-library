@@ -22,7 +22,8 @@ abstract class AbstractFilter implements Filter {
     apply(array);
   }
 
-  void before(int M, int N) {}
+  void before(int M, int N) {
+  }
 
   @Override
   public final CArray2D applied(CArray2D array) {
