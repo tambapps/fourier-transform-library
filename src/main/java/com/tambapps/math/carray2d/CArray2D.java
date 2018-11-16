@@ -68,7 +68,7 @@ public class CArray2D {
    * @param i the column index
    * @return the i-th column
    */
-  CVector getAt(int i) {
+  public CVector getAt(int i) {
     return getRow(i);
   }
 
