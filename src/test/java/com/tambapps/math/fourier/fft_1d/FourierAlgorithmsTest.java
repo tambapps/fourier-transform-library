@@ -33,7 +33,8 @@ public class FourierAlgorithmsTest {
   @Test
   public void basicTest() {
     CVector result = new ArrayCVector(input.getSize());
-    FourierAlgorithms.basicFFT(input, result);
+    CVectorUtils.copy(input, result);
+    FourierAlgorithms.BASIC.compute(result);
     assertEquals("Should be equal", expected, result);
   }
 

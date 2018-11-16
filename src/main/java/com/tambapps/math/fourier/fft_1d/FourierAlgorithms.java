@@ -81,7 +81,7 @@ public final class FourierAlgorithms {
    * @param vector the vector to compute
    * @param result the vector in which the computation will be made
    */
-  public static void basicFFT(CVector vector, CVector result) {
+  private static void basicFFT(CVector vector, CVector result) {
     double N = vector.getSize();
     for (int k = 0; k < vector.getSize(); k++) {
       Complex sum = Complex.ZERO;
