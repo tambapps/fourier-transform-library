@@ -1,6 +1,6 @@
 # Java Fourier Transform Library
 
-This is a library for computing 1-2 dimensional Fourier Transform
+This is a library for computing 1-2 dimensional Fourier Transform. It was written with Java 7
 
 ##Example
 Here is an example of a 1D fast fourier transform. There are several algorithms to perform FFT
@@ -21,7 +21,6 @@ CArray2D array2D = new CArray2D(N, N);
 fillArray(array2D);
 
 transformer2D.transform(array2D);
-
 
 FFTUtils.changeCenter(array2D);
 Filters.threshold(200, true).apply(array2D);
