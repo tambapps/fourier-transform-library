@@ -78,7 +78,9 @@ public class Complex {
   }
 
   public Complex div(Complex complex) {
-    throw new UnsupportedOperationException("not implemented yet");
+    double denom = complex.real * complex.real + complex.imaginary * complex.imaginary;
+    return new Complex((real *complex.real + imaginary * complex.imaginary) / denom,
+        (imaginary * complex.real - real * complex.imaginary) / denom);
   }
 
   public Complex div(double number) {
