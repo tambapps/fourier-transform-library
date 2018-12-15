@@ -4,9 +4,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.tambapps.math</groupId>
-  <artifactId>fft-2d</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <groupId>com.tambapps</groupId>
+  <artifactId>fft4j</artifactId>
+  <version>1.0</version>
+
+  <name>Fast Fourier Transform for Java</name>
+  <description>
+    A library allowing to perform 1D/2D Fast Fourier Transform
+  </description>
+  <url>https://github.com/nelson888/fourier-transform-library</url>
   <build>
     <plugins>
       <plugin>
@@ -28,4 +34,27 @@
       <version>4.12</version>
     </dependency>
   </dependencies>
+
+  <developers>
+    <developer>
+      <name>FONKOUA Tambue Nelson</name>
+      <email>tambapps@gmail.com</email>
+      <organization>Tambapps</organization>
+      <organizationUrl>https://webiste-42a9e.firebaseapp.com/</organizationUrl>
+    </developer>
+  </developers>
+
+  <licenses>
+    <license>
+      <name>The MIT License</name>
+      <url>https://jsoup.org/license</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:git:git://github.com/nelson888/fourier-transform-library.git</connection>
+    <developerConnection>scm:git:ssh://github.com:nelson888/fourier-transform-library.git</developerConnection>
+    <url>https://github.com/nelson888/fourier-transform-library</url>
+  </scm>
 </project>
