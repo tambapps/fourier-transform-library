@@ -12,7 +12,7 @@
   <description>
     A library allowing to perform 1D/2D Fast Fourier Transform
   </description>
-  <url>https://github.com/nelson888/fourier-transform-library</url>
+  <url>https://github.com/tambapps/fourier-transform-library</url>
   <build>
     <plugins>
       <plugin>
@@ -65,8 +65,8 @@
   </distributionManagement>
 
   <scm>
-    <connection>scm:git:git://github.com/nelson888/fourier-transform-library.git</connection>
-    <developerConnection>scm:git:ssh://github.com:nelson888/fourier-transform-library.git</developerConnection>
-    <url>https://github.com/nelson888/fourier-transform-library</url>
+    <connection>scm:git:git://github.com/tambapps/fourier-transform-library.git</connection>
+    <developerConnection>scm:git:ssh://github.com:tambapps/fourier-transform-library.git</developerConnection>
+    <url>https://github.com/tambapps/fourier-transform-library</url>
   </scm>
 </project>
