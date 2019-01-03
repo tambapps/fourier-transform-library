@@ -2,7 +2,7 @@ package com.tambapps.fft4j.util;
 
 import com.tambapps.fft4j.complex.Complex;
 
-class ImmutableCVector extends ArrayCVector {
+public class ImmutableCVector extends ArrayCVector {
 
   ImmutableCVector(Complex[] values) {
     super(values);
@@ -11,6 +11,10 @@ class ImmutableCVector extends ArrayCVector {
   @Override
   public void setAt(int i, Complex value) {
     throw new UnsupportedOperationException("Cannot modify immutable vector");
+  }
+
+  public static CVector of(Complex... values) {
+    return new ImmutableCVector(values);
   }
 
 }

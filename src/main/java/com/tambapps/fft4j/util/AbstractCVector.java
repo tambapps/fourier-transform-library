@@ -1,5 +1,7 @@
 package com.tambapps.fft4j.util;
 
+import com.tambapps.fft4j.complex.Complex;
+
 import java.util.Objects;
 
 public abstract class AbstractCVector implements CVector {
@@ -22,11 +24,12 @@ public abstract class AbstractCVector implements CVector {
     return true;
   }
 
-  void checkIndex(int i) {
+  int checkedIndex(int i) {
     if (i < 0 || i >= getSize()) {
       throw new IndexOutOfBoundsException(
           String.format("Tried to access index %d of vector with size %d", i, getSize()));
     }
+    return i;
   }
 
   @Override
@@ -42,4 +45,28 @@ public abstract class AbstractCVector implements CVector {
     return stringBuilder.toString();
   }
 
+  @Override
+  public CVector copy() {
+    return new ArrayCVector(copiedArray());
+  }
+
+  @Override
+  public CVector immutableCopy() {
+    return new ImmutableCVector(copiedArray());
+  }
+
+  @Override
+  public void copy(CVector dest) {
+    for (int i = 0; i < getSize(); i++) {
+      dest.setAt(i, getAt(i));
+    }
+  }
+
+  private Complex[] copiedArray() {
+    Complex[] complexes = new Complex[getSize()];
+    for (int i = 0; i < complexes.length; i++) {
+      complexes[i] = getAt(i);
+    }
+    return complexes;
+  }
 }

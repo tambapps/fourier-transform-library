@@ -19,14 +19,12 @@ public class ArrayCVector extends AbstractCVector {
 
   @Override
   public Complex getAt(int i) {
-    checkIndex(i);
-    return values[i];
+    return values[checkedIndex(i)];
   }
 
   @Override
   public void setAt(int i, Complex value) {
-    checkIndex(i);
-    values[i] = value;
+    values[checkedIndex(i)] = value;
   }
 
   @Override

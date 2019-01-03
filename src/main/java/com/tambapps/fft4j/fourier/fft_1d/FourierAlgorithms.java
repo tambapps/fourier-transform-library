@@ -4,7 +4,6 @@ import com.tambapps.fft4j.complex.Complex;
 import com.tambapps.fft4j.fourier.util.Utils;
 import com.tambapps.fft4j.util.ArrayCVector;
 import com.tambapps.fft4j.util.CVector;
-import com.tambapps.fft4j.util.CVectorUtils;
 
 /**
  * Class that implements multiple 1D FFT algorithms
@@ -96,7 +95,7 @@ public final class FourierAlgorithms {
   private static void basicFFT(CVector vector) {
     CVector result = new ArrayCVector(vector.getSize());
     basicFFT(vector, result);
-    CVectorUtils.copy(result, vector);
+    result.copy(vector);
   }
 
   /**
@@ -155,7 +154,7 @@ public final class FourierAlgorithms {
   }
 
   private static void recursiveFFT(CVector vector) {
-    CVectorUtils.copy(recursiveCopyFFT(vector), vector);
+    recursiveCopyFFT(vector).copy(vector);
   }
 
   /**
