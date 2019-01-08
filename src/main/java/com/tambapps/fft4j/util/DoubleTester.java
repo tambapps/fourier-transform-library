@@ -8,7 +8,7 @@ public class DoubleTester {
   private static double EQUAL_THRESHOLD = 0.000001;
 
   /**
-   * Tells weither 2 doubles are equals given a threshold
+   * Tells whether 2 doubles are equals given a threshold
    *
    * @param d1 the 1st number
    * @param d2 the 2nd number

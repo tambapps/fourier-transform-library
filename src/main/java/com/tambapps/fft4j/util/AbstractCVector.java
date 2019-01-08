@@ -4,6 +4,9 @@ import com.tambapps.fft4j.complex.Complex;
 
 import java.util.Objects;
 
+/**
+ * An abstract CVector. Useful to extends this class when creating a new CVector implementation
+ */
 public abstract class AbstractCVector implements CVector {
 
   @Override
@@ -27,7 +30,7 @@ public abstract class AbstractCVector implements CVector {
   int checkedIndex(int i) {
     if (i < 0 || i >= getSize()) {
       throw new IndexOutOfBoundsException(
-          String.format("Tried to access index %d of vector with size %d", i, getSize()));
+        String.format("Tried to access index %d of vector with size %d", i, getSize()));
     }
     return i;
   }

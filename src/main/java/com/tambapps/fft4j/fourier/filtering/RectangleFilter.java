@@ -5,7 +5,7 @@ import com.tambapps.fft4j.complex.Complex;
 /**
  * A rectangle filter. Filters values that are in/out a centered rectangle
  */
-class RectangleFilter extends AbstractFilter {
+public class RectangleFilter extends AbstractFilter {
 
   private final int width;
   private final int height;
@@ -18,7 +18,7 @@ class RectangleFilter extends AbstractFilter {
    * @param height   the filter's height
    * @param filterIn whether to filter in or out the rectangle
    */
-  RectangleFilter(int width, int height, boolean filterIn) {
+  protected RectangleFilter(int width, int height, boolean filterIn) {
     this.width = width;
     this.height = height;
     this.filterIn = filterIn;

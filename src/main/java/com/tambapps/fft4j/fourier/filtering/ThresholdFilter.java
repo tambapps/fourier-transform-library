@@ -5,7 +5,7 @@ import com.tambapps.fft4j.complex.Complex;
 /**
  * A threshold filter. Filters values that are greater/lower than a threshold
  */
-class ThresholdFilter extends AbstractFilter {
+public class ThresholdFilter extends AbstractFilter {
 
   private final double threshold;
   private final boolean filterLower;
@@ -16,7 +16,7 @@ class ThresholdFilter extends AbstractFilter {
    * @param threshold   the threshold
    * @param filterLower whether to filter values lower or greater than the threshold
    */
-  ThresholdFilter(double threshold, boolean filterLower) {
+  protected ThresholdFilter(double threshold, boolean filterLower) {
     this.threshold = threshold;
     this.filterLower = filterLower;
   }

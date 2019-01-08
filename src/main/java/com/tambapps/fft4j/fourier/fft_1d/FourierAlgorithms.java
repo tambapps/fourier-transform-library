@@ -10,6 +10,10 @@ import com.tambapps.fft4j.util.CVector;
  */
 public final class FourierAlgorithms {
 
+  /**
+   * A basic implementation of the FFT <br>
+   * Implemented the computation like in the basic formula
+   */
   public static final FFTAlgorithm BASIC = new AbstractFFTAlgorithm() {
     @Override
     public void compute(CVector vector) {
@@ -26,7 +30,11 @@ public final class FourierAlgorithms {
       return "Compute the sums like in the basic FFT formula";
     }
   };
-  //Cooley-Tukey algorithms (image sizes must be a power of two)
+
+  /**
+   * Cooley-Tukey algorithm implemented recursively. <br>
+   * Input size must be a power of two
+   */
   public static final FFTAlgorithm CT_RECURSIVE = new AbstractFFTAlgorithm() {
     @Override
     public void compute(CVector vector) {
@@ -43,6 +51,11 @@ public final class FourierAlgorithms {
       return "Cooley-Tukey algorithm implemented recursively (input array must have power of 2 sizes)";
     }
   };
+
+  /**
+   * Cooley-Tukey algorithm implemented iteratively. <br>
+   * Input size must be a power of two
+   */
   public static final FFTAlgorithm CT_ITERATIVE = new AbstractFFTAlgorithm() {
     @Override
     public void compute(CVector vector) {
@@ -59,6 +72,11 @@ public final class FourierAlgorithms {
       return "Cooley-Tukey algorithm implemented iteratively (input array must have power of 2 sizes)";
     }
   };
+
+  /**
+   * Inverse algorithm. The inverse algorithm use a FFT algorithm given
+   * in parameter.
+   */
   public static final FFITAlgorithm INVERSE = new FFITAlgorithm() {
     @Override
     public void compute(CVector vector, FFTAlgorithm algorithm) {
@@ -86,7 +104,7 @@ public final class FourierAlgorithms {
       Complex sum = Complex.ZERO;
       for (int n = 0; n < vector.getSize(); n++) {
         sum = sum.plus(vector.getAt(n).multiply(
-            Complex.expI(-2d * Math.PI * ((double) k) * ((double) n) / N)));
+          Complex.expI(-2d * Math.PI * ((double) k) * ((double) n) / N)));
       }
       result.setAt(k, sum);
     }

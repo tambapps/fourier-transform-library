@@ -7,7 +7,7 @@ import com.tambapps.fft4j.util.CVector;
 import java.util.Arrays;
 
 /**
- * A complex 2-dimensional array of size M, N.
+ * A complex 2-dimensional array of size M, N. <br>
  * M is the number of rows, N is the number of columns
  */
 public class CArray2D {
@@ -109,15 +109,15 @@ public class CArray2D {
   private void checkIndex(int row, int col) {
     if (row < 0 || row >= getM() || col < 0 || col >= getN()) {
       throw new IndexOutOfBoundsException(String
-          .format("Tried to access index (%d, %d) of array of size (%d, %d)", row, col, getM(),
-              getN()));
+        .format("Tried to access index (%d, %d) of array of size (%d, %d)", row, col, getM(),
+          getN()));
     }
   }
 
   private void checkIndex(int i) {
     if (i < 0 || i >= array.length) {
       throw new IndexOutOfBoundsException(
-          String.format("Tried to access index %d of array of size %d", i, getM() * getN()));
+        String.format("Tried to access index %d of array of size %d", i, getM() * getN()));
     }
   }
 
@@ -152,7 +152,7 @@ public class CArray2D {
   public CVector getRow(int i) {
     if (i >= rows.length) {
       throw new IndexOutOfBoundsException(
-          String.format("Tried to access row %d of array of size (%d, %d)", i, getM(), getN()));
+        String.format("Tried to access row %d of array of size (%d, %d)", i, getM(), getN()));
     }
     return rows[i];
   }
@@ -166,7 +166,7 @@ public class CArray2D {
   public CVector getColumn(int i) {
     if (i >= columns.length) {
       throw new IndexOutOfBoundsException(
-          String.format("Tried to access column %d of array of size (%d, %d)", i, getM(), getN()));
+        String.format("Tried to access column %d of array of size (%d, %d)", i, getM(), getN()));
     }
     return columns[i];
   }
@@ -174,7 +174,7 @@ public class CArray2D {
   @Override
   public String toString() {
     StringBuilder stringBuilder = new StringBuilder().append("(")
-        .append(getM()).append(", ").append(getN()).append(")\n");
+      .append(getM()).append(", ").append(getN()).append(")\n");
     for (int i = 0; i < getN() * getM(); i++) {
       stringBuilder.append("(").append(get(i)).append(")\t");
       if ((i + 1) % getN() == 0) {

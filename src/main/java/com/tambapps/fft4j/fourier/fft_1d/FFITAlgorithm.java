@@ -18,7 +18,7 @@ public interface FFITAlgorithm {
   void compute(CVector vector, FFTAlgorithm algorithm);
 
   /**
-   * same as compute (util for groovy)
+   * same as compute (util for groovy operator)
    *
    * @param vector    the input of the fourier inverse
    * @param algorithm the algorithm used by the fourier inverse

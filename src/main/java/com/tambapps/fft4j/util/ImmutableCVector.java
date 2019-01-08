@@ -2,7 +2,10 @@ package com.tambapps.fft4j.util;
 
 import com.tambapps.fft4j.complex.Complex;
 
-public class ImmutableCVector extends ArrayCVector {
+/**
+ * An immutable CVector
+ */
+public final class ImmutableCVector extends ArrayCVector {
 
   ImmutableCVector(Complex[] values) {
     super(values);

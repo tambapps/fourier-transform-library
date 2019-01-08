@@ -32,12 +32,14 @@ public interface CVector {
 
   /**
    * returns a copy of this vector
+   *
    * @return a copy of this vector
    */
   CVector copy();
 
   /**
    * returns an immutable copy of this vector
+   *
    * @return an immutable copy of this vector
    */
   CVector immutableCopy();

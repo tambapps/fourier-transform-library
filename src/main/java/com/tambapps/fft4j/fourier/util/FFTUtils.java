@@ -43,7 +43,7 @@ public class FFTUtils {
       return array.copy();
     }
     return paddedCopy(array, padding.getLeft(), padding.getRight(), padding.getTop(),
-        padding.getEnd());
+      padding.getEnd());
   }
 
   /**
@@ -57,13 +57,13 @@ public class FFTUtils {
    * @return the padded copy of the given array
    */
   public static CArray2D paddedCopy(CArray2D array, int paddingLeft, int paddingRight,
-      int paddingTop, int paddingEnd) {
+                                    int paddingTop, int paddingEnd) {
     CArray2D copy = new CArray2D(array.getM() + paddingTop + paddingEnd,
-        array.getN() + paddingLeft + paddingRight);
+      array.getN() + paddingLeft + paddingRight);
     for (int i = 0; i < copy.getM(); i++) {
       for (int j = 0; j < copy.getN(); j++) {
         if (i < paddingEnd || i - paddingEnd >= array.getM() ||
-            j < paddingLeft || j - paddingLeft >= array.getN()) {
+          j < paddingLeft || j - paddingLeft >= array.getN()) {
           copy.set(i, j, Complex.ZERO);
         } else {
           copy.set(i, j, array.get(i - paddingEnd, j - paddingLeft));
@@ -85,7 +85,7 @@ public class FFTUtils {
       return array.copy();
     }
     return unpaddedCopy(array, padding.getLeft(), padding.getRight(), padding.getTop(),
-        padding.getEnd());
+      padding.getEnd());
   }
 
   /**
@@ -99,9 +99,9 @@ public class FFTUtils {
    * @return the unpadded copy of the given array
    */
   public static CArray2D unpaddedCopy(CArray2D array, int paddingLeft, int paddingRight,
-      int paddingTop, int paddingEnd) {
+                                      int paddingTop, int paddingEnd) {
     CArray2D copy = new CArray2D(array.getM() - paddingTop - paddingEnd,
-        array.getN() - paddingLeft - paddingRight);
+      array.getN() - paddingLeft - paddingRight);
     for (int i = 0; i < copy.getM(); i++) {
       for (int j = 0; j < copy.getN(); j++) {
         copy.set(i, j, array.get(i + paddingEnd, j + paddingLeft));

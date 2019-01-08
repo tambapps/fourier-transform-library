@@ -17,7 +17,7 @@ public interface FFTAlgorithm {
   void compute(CVector vector);
 
   /**
-   * Same as comput (util for groovy)
+   * Same as comput (util for groovy operator)
    *
    * @param vector the input of the FT
    */
