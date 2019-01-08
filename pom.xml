@@ -12,7 +12,7 @@
   <description>
     A library allowing to perform 1D/2D Fast Fourier Transform
   </description>
-  <url>https://github.com/tambapps/fourier-transform-library</url>
+  <url>https://tambapps.github.io/fourier-transform-library/</url>
   <build>
     <plugins>
       <plugin>
