@@ -46,7 +46,7 @@ init(vector)
 FourierAlgorithms.BASIC(vector)
 display(vector)
 for(int i = 0; i < vector.size ; i++) {
-  print vector[i]
+  println vector[i]
 }
 ```
 
@@ -55,7 +55,7 @@ def array = new ArrayCVector(N, M)
 init(array)
 for(int i = 0; i < array.M ; i++) {
   for(int j = 0; i < array.N ; i++) {
-    print array[i][j]
+    println array[i][j]
   }
 }
 display(array)
