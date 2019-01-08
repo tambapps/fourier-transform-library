@@ -36,3 +36,30 @@ There are many filters implemented in the `Filters` class. If you want to implem
 
 ## Change center
 If you want to display an FFT, it can be useful to change the center. There is the function `FFTUtils.changeCenter(array)` for that.
+
+##Groovy friendly
+the CArray2D and other classes have functions that define operator in groovy. Here is an example of groovy code
+
+```groovy
+def vector = new CVector(N)
+init(vector)
+FourierAlgorithms.BASIC(vector)
+display(vector)
+for(int i = 0; i < vector.size ; i++) {
+  print vector[i]
+}
+```
+
+```groovy
+def array = new ArrayCVector(N, M)
+init(array)
+for(int i = 0; i < array.M ; i++) {
+  for(int j = 0; i < array.N ; i++) {
+    print array[i][j]
+  }
+}
+display(array)
+def recFilter = Filters.rectangle(size, size, true)
+recFilter(array)
+display(array)
+```
