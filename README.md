@@ -2,6 +2,15 @@
 
 This is a library for computing 1-2 dimensional Fourier Transform. It was written with Java 7
 
+You can use import it with maven.
+
+```xml
+<dependency>
+  <groupId>com.tambapps.fft4j</groupId>
+  <artifactId>fft4j</artifactId>
+  <version>1.0</version>
+</dependency>
+```
 ## 1D Fast Fourier Transform
 Here is an example of a 1D fast fourier transform. There are several algorithms to perform FFT
 You can see all of them on the FourierAlgorithms class.
