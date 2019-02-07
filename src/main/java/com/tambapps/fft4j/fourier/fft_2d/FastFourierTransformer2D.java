@@ -6,10 +6,12 @@ import com.tambapps.fft4j.fourier.fft_1d.FourierAlgorithms;
 import com.tambapps.fft4j.fourier.util.Utils;
 import com.tambapps.fft4j.util.CVector;
 
-import java.util.concurrent.Callable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * This is the class that applies 2D Fast Fourier Transform
@@ -26,29 +28,21 @@ public class FastFourierTransformer2D {
     }
   };
 
-  private final double maxThreads;
-  private final ExecutorCompletionService<Boolean> executorService;
+  private final ExecutorService executorService;
   private AlgorithmChooser chooser;
 
-  /**
-   * Creates a FFT2DComputer with the given executor
-   *
-   * @param executor the executor that will execute tasks
-   */
-  public FastFourierTransformer2D(ExecutorService executor) {
-    this(executor, Runtime.getRuntime().availableProcessors() + 1);
+  public FastFourierTransformer2D() {
+    this(Runtime.getRuntime().availableProcessors() + 1);
   }
 
   /**
-   * Creates a FFT2DComputer with the given executor
+   * Creates a FFT2DComputer with the an executor having the specified number of threads
    *
-   * @param executor   the executor that will execute tasks
-   * @param maxThreads the max number of threads that can be used for computing
+   * @param nbThreads the number of threads used by the executor
    */
-  public FastFourierTransformer2D(ExecutorService executor, int maxThreads) {
-    executorService = new ExecutorCompletionService<>(executor);
-    this.maxThreads = maxThreads;
+  public FastFourierTransformer2D(int nbThreads) {
     chooser = DEFAULT_CHOOSER;
+    executorService = Executors.newFixedThreadPool(nbThreads);
   }
 
   /**
@@ -95,24 +89,24 @@ public class FastFourierTransformer2D {
 
   private boolean compute(CArray2D f, final boolean inverse, final boolean row,
                           FFTAlgorithm algorithm) {
+    List<Future> futures = new ArrayList<>();
     int count = row ? f.getM() : f.getN();
 
     for (int i = 0; i < count; i++) {
       if (inverse) {
-        executorService.submit(new InverseTask(algorithm, f, i, row));
+        futures.add(executorService.submit(new InverseTask(algorithm, f, i, row)));
       } else {
-        executorService.submit(new TransformTask(algorithm, f, i, row));
+        futures.add(executorService.submit(new TransformTask(algorithm, f, i, row)));
       }
     }
     boolean success = true;
     for (int i = 0; i < count; i++) {
       try {
-        executorService.take().get();
+        futures.get(i).get();
       } catch (InterruptedException | ExecutionException e) {
         success = false;
       }
     }
-
     return success;
   }
 
@@ -126,7 +120,7 @@ public class FastFourierTransformer2D {
   }
 
 
-  private abstract class FourierTask implements Callable<Boolean> {
+  private abstract class FourierTask implements Runnable {
 
     protected final FFTAlgorithm algorithm;
     private final CArray2D data;
@@ -141,13 +135,12 @@ public class FastFourierTransformer2D {
     }
 
     @Override
-    public final Boolean call() {
+    public final void run() {
       if (row) {
         computeVector(data.getRow(index));
       } else {
         computeVector(data.getColumn(index));
       }
-      return true;
     }
 
     abstract void computeVector(CVector vector);

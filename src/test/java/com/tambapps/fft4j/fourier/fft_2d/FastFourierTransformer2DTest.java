@@ -14,8 +14,7 @@ public class FastFourierTransformer2DTest {
 
   private final static double LIMIT = 1024d;
 
-  private final FastFourierTransformer2D transformer2D = new FastFourierTransformer2D(
-      Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() + 1));
+  private final FastFourierTransformer2D transformer2D = new FastFourierTransformer2D();
 
   @Test
   public void testSuccess() {
