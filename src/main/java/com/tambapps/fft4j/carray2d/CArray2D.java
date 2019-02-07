@@ -5,6 +5,7 @@ import com.tambapps.fft4j.util.AbstractCVector;
 import com.tambapps.fft4j.util.CVector;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * A complex 2-dimensional array of size M, N. <br>
@@ -25,7 +26,16 @@ public class CArray2D {
    * @param N the number of columns
    */
   public CArray2D(int M, int N) {
-    this(M, N, new Complex[M * N]);
+    array = new Complex[M * N];
+    Arrays.fill(array, Complex.ZERO);
+    columns = new Column[N];
+    rows = new Row[M];
+    for (int i = 0; i < columns.length; i++) {
+      columns[i] = new Column(i);
+    }
+    for (int i = 0; i < rows.length; i++) {
+      rows[i] = new Row(i);
+    }
   }
 
   /**
@@ -39,7 +49,12 @@ public class CArray2D {
     if (values.length != M * N) {
       throw new IllegalArgumentException("Array should be of size N * M: " + M * N);
     }
-    array = values;
+    array = Arrays.copyOf(values, values.length);
+    for (int i = 0; i < array.length; i++) {
+      if (array[i] == null) {
+        array[i] = Complex.ZERO;
+      }
+    }
     columns = new Column[N];
     rows = new Row[M];
     for (int i = 0; i < columns.length; i++) {
@@ -92,7 +107,7 @@ public class CArray2D {
    */
   public void set(int row, int col, Complex value) {
     checkIndex(row, col);
-    array[getIndex(row, col)] = value;
+    array[getIndex(row, col)] = Objects.requireNonNull(value, "Cannot set a null value");
   }
 
   /**
@@ -103,7 +118,7 @@ public class CArray2D {
    */
   public void set(int i, Complex value) {
     checkIndex(i);
-    array[i] = value;
+    array[i] = Objects.requireNonNull(value, "Cannot set a null value");
   }
 
   private void checkIndex(int row, int col) {
