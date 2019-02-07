@@ -95,24 +95,15 @@ public class FastFourierTransformer2D {
 
   private boolean compute(CArray2D f, final boolean inverse, final boolean row,
                           FFTAlgorithm algorithm) {
-    int treated = 0;
-    int max = row ? f.getM() : f.getN();
-    int perThread = (int) Math.floor(((double) max) / maxThreads);
-    int count = 0;
+    int count = row ? f.getM() : f.getN();
 
-    while (treated < max) {
+    for (int i = 0; i < count; i++) {
       if (inverse) {
-        executorService.submit(
-          new InverseTask(algorithm, f, treated, Math.min(max, treated + perThread), row));
+        executorService.submit(new InverseTask(algorithm, f, i, row));
       } else {
-        executorService.submit(new TransformTask(algorithm, f, treated,
-          Math.min(max, treated + perThread), row));
+        executorService.submit(new TransformTask(algorithm, f, i, row));
       }
-
-      treated += perThread;
-      count++;
     }
-
     boolean success = true;
     for (int i = 0; i < count; i++) {
       try {
@@ -139,28 +130,22 @@ public class FastFourierTransformer2D {
 
     protected final FFTAlgorithm algorithm;
     private final CArray2D data;
-    private final int from;
-    private final int to;
+    private final int index;
     private final boolean row;
 
-    FourierTask(FFTAlgorithm algorithm, CArray2D data, int from, int to, boolean row) {
+    FourierTask(FFTAlgorithm algorithm, CArray2D data, int index, boolean row) {
       this.algorithm = algorithm;
       this.data = data;
-      this.from = from;
-      this.to = to;
+      this.index = index;
       this.row = row;
     }
 
     @Override
     public final Boolean call() {
       if (row) {
-        for (int i = from; i < to; i++) {
-          computeVector(data.getRow(i));
-        }
+        computeVector(data.getRow(index));
       } else {
-        for (int i = from; i < to; i++) {
-          computeVector(data.getColumn(i));
-        }
+        computeVector(data.getColumn(index));
       }
       return true;
     }
@@ -174,8 +159,8 @@ public class FastFourierTransformer2D {
    */
   private class TransformTask extends FourierTask {
 
-    TransformTask(FFTAlgorithm algorithm, CArray2D data, int from, int to, boolean row) {
-      super(algorithm, data, from, to, row);
+    TransformTask(FFTAlgorithm algorithm, CArray2D data, int i, boolean row) {
+      super(algorithm, data, i, row);
     }
 
     @Override
@@ -187,12 +172,12 @@ public class FastFourierTransformer2D {
 
 
   /**
-   * Task that will compute the inverse FFT for many columns/rows
+   * Task that will compute the inverse FFT for a given row/column
    */
   private class InverseTask extends FourierTask {
 
-    InverseTask(FFTAlgorithm algorithm, CArray2D data, int from, int to, boolean row) {
-      super(algorithm, data, from, to, row);
+    InverseTask(FFTAlgorithm algorithm, CArray2D data, int i, boolean row) {
+      super(algorithm, data, i, row);
     }
 
     @Override
