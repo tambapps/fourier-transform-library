@@ -2,7 +2,7 @@
 
 This is a library for computing 1-2 dimensional Fourier Transform. It was written with Java 7
 
-You can use import it with maven.
+You can import it with maven.
 
 ```xml
 <dependency>
@@ -46,7 +46,7 @@ There are many filters implemented in the `Filters` class. If you want to implem
 ## Change center
 If you want to display an FFT, it can be useful to change the center. There is the function `FFTUtils.changeCenter(array)` for that.
 
-##Groovy friendly
+## Groovy friendly
 the CArray2D and other classes have functions that define operator in groovy. Here is an example of groovy code
 
 ```groovy
