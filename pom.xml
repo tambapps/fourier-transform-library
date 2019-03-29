@@ -6,7 +6,7 @@
 
   <groupId>com.tambapps.fft4j</groupId>
   <artifactId>fft4j</artifactId>
-  <version>1.0</version>
+  <version>1.1</version>
 
   <name>Fast Fourier Transform for Java</name>
   <description>
