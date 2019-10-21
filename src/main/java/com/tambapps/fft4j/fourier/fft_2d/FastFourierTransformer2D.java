@@ -46,12 +46,21 @@ public class FastFourierTransformer2D {
   }
 
   /**
-   * Computes the FFT in the given array, with the given FFT algorithm
-   *
-   * @param f         the input
-   * @param algorithm the algorithm used for the computation
-   * @return true if it was a success
+   * Creates a FFT2DComputer that will use the given ExecutorService to process FFT
+   * @param service the executor service
    */
+  public FastFourierTransformer2D(ExecutorService service) {
+    this.executorService = service;
+    chooser = DEFAULT_CHOOSER;
+  }
+
+  /**
+     * Computes the FFT in the given array, with the given FFT algorithm
+     *
+     * @param f         the input
+     * @param algorithm the algorithm used for the computation
+     * @return true if it was a success
+     */
   public boolean transform(CArray2D f, FFTAlgorithm algorithm) {
     return compute(f, false, true, algorithm) && compute(f, false, false, algorithm);
   }
