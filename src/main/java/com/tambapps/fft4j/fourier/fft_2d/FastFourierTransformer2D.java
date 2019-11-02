@@ -184,7 +184,7 @@ public class FastFourierTransformer2D {
 
     @Override
     void computeVector(CVector vector) {
-      FourierAlgorithms.INVERSE.compute(vector, algorithm);
+      FourierAlgorithms.inverse(algorithm).compute(vector);
     }
 
   }

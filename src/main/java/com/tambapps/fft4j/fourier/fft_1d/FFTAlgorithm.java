@@ -17,6 +17,15 @@ public interface FFTAlgorithm {
   void compute(CVector vector);
 
   /**
+   * Computes the Fourier transform in the
+   * returned vector
+   *
+   * @param vector the input of the FT
+   * @return the FFT vector
+   */
+  CVector computeCopy(CVector vector);
+
+  /**
    * Same as comput (util for groovy operator)
    *
    * @param vector the input of the FT

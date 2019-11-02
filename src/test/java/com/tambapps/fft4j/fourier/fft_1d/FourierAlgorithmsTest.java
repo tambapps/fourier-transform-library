@@ -8,6 +8,8 @@ import com.tambapps.fft4j.util.CVector;
 import com.tambapps.fft4j.util.ImmutableCVector;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 public class FourierAlgorithmsTest {
 
   private final static Complex ONE = Complex.of(1);
@@ -29,33 +31,34 @@ public class FourierAlgorithmsTest {
       Complex.ZERO,
       Complex.of(1, 2.414214));
 
+  private void algorithmTest(FFTAlgorithm algorithm) {
+    CVector result = input.copy();
+    algorithm.compute(result);
+    assertEquals("Should be equal", expected, result);
+    assertEquals("Should be equal", expected, algorithm.computeCopy(input));
+  }
+
   @Test
   public void basicTest() {
-    CVector result = input.copy();
-    FourierAlgorithms.BASIC.compute(result);
-    assertEquals("Should be equal", expected, result);
+    algorithmTest(FourierAlgorithms.BASIC);
   }
 
   @Test
   public void recursiveTest() {
-    CVector result = input.copy();
-    FourierAlgorithms.CT_RECURSIVE.compute(result);
-    assertEquals("Should be equal", expected, result);
+    algorithmTest(FourierAlgorithms.CT_RECURSIVE);
   }
 
   @Test
   public void iterativeTest() {
-    CVector result = input.copy();
-    FourierAlgorithms.CT_ITERATIVE.compute(result);
-    assertEquals("Should be equal", expected, result);
+    algorithmTest(FourierAlgorithms.CT_ITERATIVE);
   }
 
   @Test
   public void inverseTest() {
-    for (FFTAlgorithm algorithm : new FFTAlgorithm[] {FourierAlgorithms.CT_ITERATIVE,
-        FourierAlgorithms.BASIC, FourierAlgorithms.CT_RECURSIVE}) {
+    for (FFTAlgorithm algorithm : Arrays.asList(FourierAlgorithms.CT_ITERATIVE,
+      FourierAlgorithms.BASIC, FourierAlgorithms.CT_RECURSIVE)) {
       CVector result = expected.copy();
-      FourierAlgorithms.INVERSE.compute(result, algorithm);
+      FourierAlgorithms.inverse(algorithm).compute(result);
       assertEquals("Should be equal", input, result);
     }
   }

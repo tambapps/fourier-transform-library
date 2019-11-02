@@ -14,10 +14,54 @@ public final class FourierAlgorithms {
    * A basic implementation of the FFT <br>
    * Implemented the computation like in the basic formula
    */
-  public static final FFTAlgorithm BASIC = new AbstractFFTAlgorithm() {
+  public static final FFTAlgorithm BASIC = new BasicFFT();
+  /**
+   * Cooley-Tukey algorithm implemented recursively. <br>
+   * Input size must be a power of two
+   */
+  public static final FFTAlgorithm CT_RECURSIVE = new CooleyTukeyRecursiveFFT();
+
+  /**
+   * Cooley-Tukey algorithm implemented iteratively. <br>
+   * Input size must be a power of two
+   */
+  public static final FFTAlgorithm CT_ITERATIVE = new CooleyTukeyIterativeFFT();
+
+  /**
+   * Inverse algorithm. The inverse algorithm use a FFT algorithm given
+   * as a parameter.
+   */
+  public static FFITAlgorithm inverse(FFTAlgorithm algorithm) {
+    return new FFITAlgorithmImpl(algorithm);
+  }
+
+  private FourierAlgorithms() {}
+
+  /**
+   * The basic algorithm for the FFT
+   *
+   */
+  private static class BasicFFT extends AbstractFFTAlgorithm {
+
     @Override
     public void compute(CVector vector) {
-      basicFFT(vector);
+      CVector result = computeCopy(vector);
+      result.copy(vector);
+    }
+
+    @Override
+    public CVector computeCopy(CVector vector) {
+      CVector result = new ArrayCVector(vector.getSize());
+      double N = vector.getSize();
+      for (int k = 0; k < vector.getSize(); k++) {
+        Complex sum = Complex.ZERO;
+        for (int n = 0; n < vector.getSize(); n++) {
+          sum = sum.plus(vector.getAt(n).multiply(
+            Complex.expI(-2d * Math.PI * ((double) k) * ((double) n) / N)));
+        }
+        result.setAt(k, sum);
+      }
+      return result;
     }
 
     @Override
@@ -29,37 +73,62 @@ public final class FourierAlgorithms {
     public String getDescription() {
       return "Compute the sums like in the basic FFT formula";
     }
-  };
+  }
 
   /**
-   * Cooley-Tukey algorithm implemented recursively. <br>
-   * Input size must be a power of two
+   * Compute the 1D FFT in the given vector
+   * with the iterative Cooley-Tukey algorithm
+   * The computation is made in the given vector
+   * (not very precise for large 2D arrays)
+   *
+   * @link from https://rosettacode.org/wiki/Fast_Fourier_transform#Java
    */
-  public static final FFTAlgorithm CT_RECURSIVE = new AbstractFFTAlgorithm() {
+  private static class CooleyTukeyIterativeFFT extends AbstractFFTAlgorithm {
+
     @Override
     public void compute(CVector vector) {
-      recursiveFFT(vector);
+      int n = vector.getSize();
+
+      int bits = Utils.get2Exponent(n);
+      bitReverseVector(vector, bits);
+
+      for (int m = 2; m <= n; m <<= 1) {
+        for (int i = 0; i < n; i += m) {
+          for (int k = 0; k < m / 2; k++) {
+            int evenIndex = i + k;
+            int oddIndex = i + k + (m / 2);
+            Complex even = vector.getAt(evenIndex);
+            Complex odd = vector.getAt(oddIndex);
+
+            Complex wm = Complex.expI(-2d * Math.PI * k / (double) m).multiply(odd);
+            vector.setAt(evenIndex, even.plus(wm));
+            vector.setAt(oddIndex, even.minus(wm));
+          }
+        }
+      }
     }
 
-    @Override
-    public String getName() {
-      return "Cooley-Tukey recursive";
+    private int bitReversedIndex(int n, int bits) {
+      int reversedN = n;
+      int count = bits - 1;
+
+      n >>= 1;
+      while (n > 0) {
+        reversedN = (reversedN << 1) | (n & 1);
+        count--;
+        n >>= 1;
+      }
+
+      return ((reversedN << count) & ((1 << bits) - 1));
     }
 
-    @Override
-    public String getDescription() {
-      return "Cooley-Tukey algorithm implemented recursively (input array must have power of 2 sizes)";
-    }
-  };
-
-  /**
-   * Cooley-Tukey algorithm implemented iteratively. <br>
-   * Input size must be a power of two
-   */
-  public static final FFTAlgorithm CT_ITERATIVE = new AbstractFFTAlgorithm() {
-    @Override
-    public void compute(CVector vector) {
-      iterativeFFT(vector);
+    private void bitReverseVector(CVector buffer, int bits) {
+      for (int j = 1; j < buffer.getSize() / 2; j++) {
+        int swapPos = bitReversedIndex(j, bits);
+        Complex temp = buffer.getAt(j);
+        buffer.setAt(j, buffer.getAt(swapPos));
+        buffer.setAt(swapPos, temp);
+      }
     }
 
     @Override
@@ -71,184 +140,116 @@ public final class FourierAlgorithms {
     public String getDescription() {
       return "Cooley-Tukey algorithm implemented iteratively (input array must have power of 2 sizes)";
     }
-  };
-
-  /**
-   * Inverse algorithm. The inverse algorithm use a FFT algorithm given
-   * in parameter.
-   */
-  public static final FFITAlgorithm INVERSE = new FFITAlgorithm() {
-    @Override
-    public void compute(CVector vector, FFTAlgorithm algorithm) {
-      inverse(vector, algorithm);
-    }
-
-    @Override
-    public void call(CVector vector, FFTAlgorithm algorithm) {
-      compute(vector, algorithm);
-    }
-  };
-
-  private FourierAlgorithms() {
-  }
-
-  /**
-   * The basic algorithm for the FFT
-   *
-   * @param vector the vector to compute
-   * @param result the vector in which the computation will be made
-   */
-  private static void basicFFT(CVector vector, CVector result) {
-    double N = vector.getSize();
-    for (int k = 0; k < vector.getSize(); k++) {
-      Complex sum = Complex.ZERO;
-      for (int n = 0; n < vector.getSize(); n++) {
-        sum = sum.plus(vector.getAt(n).multiply(
-          Complex.expI(-2d * Math.PI * ((double) k) * ((double) n) / N)));
-      }
-      result.setAt(k, sum);
-    }
-  }
-
-  private static void basicFFT(CVector vector) {
-    CVector result = new ArrayCVector(vector.getSize());
-    basicFFT(vector, result);
-    result.copy(vector);
-  }
-
-  /**
-   * Compute the 1D FFT in the given vector
-   * with the iterative Cooley-Tukey algorithm
-   * The computation is made in the given vector
-   * (not very precise for large 2D arrays)
-   *
-   * @param vector the discrete function to compute the DFT
-   * @link from https://rosettacode.org/wiki/Fast_Fourier_transform#Java
-   */
-  private static void iterativeFFT(CVector vector) {
-    int n = vector.getSize();
-
-    int bits = Utils.get2Exponent(n);
-    bitReverseVector(vector, bits);
-
-    for (int m = 2; m <= n; m <<= 1) {
-      double dM = (double) m;
-      for (int i = 0; i < n; i += m) {
-        for (int k = 0; k < m / 2; k++) {
-          int evenIndex = i + k;
-          int oddIndex = i + k + (m / 2);
-          Complex even = vector.getAt(evenIndex);
-          Complex odd = vector.getAt(oddIndex);
-
-          Complex wm = Complex.expI(-2d * Math.PI * k / dM).multiply(odd);
-          vector.setAt(evenIndex, even.plus(wm));
-          vector.setAt(oddIndex, even.minus(wm));
-        }
-      }
-    }
-  }
-
-  private static int bitReversedIndex(int n, int bits) {
-    int reversedN = n;
-    int count = bits - 1;
-
-    n >>= 1;
-    while (n > 0) {
-      reversedN = (reversedN << 1) | (n & 1);
-      count--;
-      n >>= 1;
-    }
-
-    return ((reversedN << count) & ((1 << bits) - 1));
-  }
-
-  private static void bitReverseVector(CVector buffer, int bits) {
-    for (int j = 1; j < buffer.getSize() / 2; j++) {
-      int swapPos = bitReversedIndex(j, bits);
-      Complex temp = buffer.getAt(j);
-      buffer.setAt(j, buffer.getAt(swapPos));
-      buffer.setAt(swapPos, temp);
-    }
-  }
-
-  private static void recursiveFFT(CVector vector) {
-    recursiveCopyFFT(vector).copy(vector);
   }
 
   /**
    * Compute the FFT in the given vector
    * with the recursive Cooley-Tukey algorithm
    *
-   * @param vector the discrete function to compute the DFT
-   * @return the result FFT of the given vector
    * @link from https://rosettacode.org/wiki/Fast_Fourier_transform
    */
-  private static CVector recursiveCopyFFT(CVector vector) {
-    int N = vector.getSize();
-    if (N <= 1) {
-      return vector;
-    }
-    CVector evens = recursiveCopyFFT(evensCopy(vector));
-    CVector odds = recursiveCopyFFT(oddsCopy(vector));
+  private static class CooleyTukeyRecursiveFFT extends AbstractFFTAlgorithm {
 
-    Complex[] T = new Complex[N / 2];
-    for (int i = 0; i < N / 2; i++) {
-      T[i] = odds.getAt(i).multiply(Complex.expI(-2d * Math.PI * ((double) i) / ((double) N)));
+    @Override
+    public void compute(CVector vector) {
+      computeCopy(vector).copy(vector);
     }
 
-    CVector result = new ArrayCVector(N);
-    for (int i = 0; i < N / 2; i++) {
-      result.setAt(i, evens.getAt(i).plus(T[i]));
-      result.setAt(i + N / 2, evens.getAt(i).minus(T[i]));
+    @Override
+    public CVector computeCopy(CVector vector) {
+      int N = vector.getSize();
+      if (N <= 1) {
+        return vector;
+      }
+      CVector evens = computeCopy(evensCopy(vector));
+      CVector odds = computeCopy(oddsCopy(vector));
+
+      Complex[] T = new Complex[N / 2];
+      for (int i = 0; i < N / 2; i++) {
+        T[i] = odds.getAt(i).multiply(Complex.expI(-2d * Math.PI * ((double) i) / ((double) N)));
+      }
+
+      CVector result = new ArrayCVector(N);
+      for (int i = 0; i < N / 2; i++) {
+        result.setAt(i, evens.getAt(i).plus(T[i]));
+        result.setAt(i + N / 2, evens.getAt(i).minus(T[i]));
+      }
+      return result;
     }
-    return result;
+
+    private CVector evensCopy(CVector vector) {
+      int size = (vector.getSize() + 1) / 2;
+
+      CVector copy = new ArrayCVector(size);
+      int count = 0;
+      for (int i = 0; i < vector.getSize(); i += 2) {
+        copy.setAt(count, vector.getAt(i));
+        count++;
+      }
+      return copy;
+    }
+
+    private CVector oddsCopy(CVector vector) {
+      int size = vector.getSize() / 2;
+
+      CVector copy = new ArrayCVector(size);
+      int count = 0;
+      for (int i = 1; i < vector.getSize(); i += 2) {
+        copy.setAt(count, vector.getAt(i));
+        count++;
+      }
+      return copy;
+    }
+
+    @Override
+    public String getName() {
+      return "Cooley-Tukey recursive";
+    }
+
+    @Override
+    public String getDescription() {
+      return "Cooley-Tukey algorithm implemented recursively (input array must have power of 2 sizes)";
+    }
   }
 
-  private static CVector evensCopy(CVector vector) {
-    int size = (vector.getSize() + 1) / 2;
-
-    CVector copy = new ArrayCVector(size);
-    int count = 0;
-    for (int i = 0; i < vector.getSize(); i += 2) {
-      copy.setAt(count, vector.getAt(i));
-      count++;
+  private abstract static class AbstractFFTAlgorithm implements FFTAlgorithm {
+    @Override
+    public void call(CVector vector) {
+      compute(vector);
     }
-    return copy;
-  }
 
-  private static CVector oddsCopy(CVector vector) {
-    int size = vector.getSize() / 2;
-
-    CVector copy = new ArrayCVector(size);
-    int count = 0;
-    for (int i = 1; i < vector.getSize(); i += 2) {
-      copy.setAt(count, vector.getAt(i));
-      count++;
+    @Override
+    public CVector computeCopy(CVector vector) {
+      CVector result = vector.copy();
+      compute(result);
+      return result;
     }
-    return copy;
   }
 
   /**
-   * Inverse a Fourier Transformed vector with a given FFT algorithm
+   * Inverse a Fourier Transformed vector using a given FFT algorithm
    *
-   * @param vector    the vector to inverse
-   * @param algorithm the FFT algorithm used in the inverse
    */
-  private static void inverse(CVector vector, FFTAlgorithm algorithm) {
-    for (int i = 0; i < vector.getSize(); i++) {
-      vector.setAt(i, vector.getAt(i).conj());
+  private static class FFITAlgorithmImpl implements FFITAlgorithm {
+    private final FFTAlgorithm algorithm;
+
+    private FFITAlgorithmImpl(FFTAlgorithm algorithm) {
+      this.algorithm = algorithm;
     }
 
-    algorithm.compute(vector);
+    @Override
+    public void compute(CVector vector) {
+      for (int i = 0; i < vector.getSize(); i++) {
+        vector.setAt(i, vector.getAt(i).conj());
+      }
 
-    double iN = 1d / ((double) vector.getSize());
-    for (int i = 0; i < vector.getSize(); i++) {
-      vector.setAt(i, vector.getAt(i).conj().multiply(iN));
+      algorithm.compute(vector);
+
+      double iN = 1d / ((double) vector.getSize());
+      for (int i = 0; i < vector.getSize(); i++) {
+        vector.setAt(i, vector.getAt(i).conj().multiply(iN));
+      }
     }
-  }
-
-
-  private abstract static class AbstractFFTAlgorithm implements FFTAlgorithm {
 
     @Override
     public void call(CVector vector) {
