@@ -44,6 +44,16 @@ class Complex constructor(val real: Double, val imaginary: Double) {
     }
 
     /**
+     * Computes scales this complex number with the given scalar
+     *
+     * @param scl the scalar
+     * @return the scaled number
+     */
+    operator fun times(scl: Int): Complex {
+        return Complex(scl * real, scl * imaginary)
+    }
+
+    /**
      * Returns the negate of this number
      *
      * @return the negate
