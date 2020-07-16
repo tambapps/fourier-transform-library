@@ -1,7 +1,9 @@
 package com.tambapps.fft4j.complex
 
 import com.tambapps.fft4j.util.DoubleTester.equal
+import kotlin.math.cos
 import kotlin.math.hypot
+import kotlin.math.sin
 
 /**
  * Representation of a complex number
@@ -231,7 +233,7 @@ data class Complex constructor(val real: Double, val imaginary: Double) {
          * @return the exponential complex number
          */
         fun expI(x: Double): Complex {
-            return of(Math.cos(x), Math.sin(x))
+            return of(cos(x), sin(x))
         }
     }
 
