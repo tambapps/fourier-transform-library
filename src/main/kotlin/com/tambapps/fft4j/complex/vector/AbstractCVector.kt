@@ -60,4 +60,10 @@ abstract class AbstractCVector : CVector {
         }
         return true
     }
+
+    override fun hashCode(): Int {
+        var result = 1
+        for (i in 0 until size) result = 31 * result + get(i).hashCode()
+        return result
+    }
 }

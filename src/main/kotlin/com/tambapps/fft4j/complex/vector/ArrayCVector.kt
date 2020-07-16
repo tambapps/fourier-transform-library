@@ -17,8 +17,4 @@ open class ArrayCVector constructor(private val elements: Array<Complex>): Abstr
     override val size: Int
         get() = elements.size
 
-    override fun hashCode(): Int {
-        return elements.contentHashCode()
-    }
-
 }
