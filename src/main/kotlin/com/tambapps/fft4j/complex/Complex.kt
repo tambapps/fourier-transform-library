@@ -9,6 +9,9 @@ import kotlin.math.sin
  * Representation of a complex number
  */
 class Complex constructor(val real: Double, val imaginary: Double) {
+
+    constructor(real: Double): this(real, 0.0)
+
     /**
      * Returns whether this number is pure imaginary (null real part)
      *
