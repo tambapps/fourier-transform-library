@@ -8,7 +8,7 @@ import kotlin.math.sin
 /**
  * Representation of a complex number
  */
-data class Complex constructor(val real: Double, val imaginary: Double) {
+class Complex constructor(val real: Double, val imaginary: Double) {
     /**
      * Returns whether this number is pure imaginary (null real part)
      *
@@ -24,6 +24,14 @@ data class Complex constructor(val real: Double, val imaginary: Double) {
      */
     val isPureReal: Boolean
         get() = equal(0.0, imaginary)
+
+    operator fun component1(): Double {
+        return real
+    }
+
+    operator fun component2(): Double {
+        return imaginary
+    }
 
     /**
      * Computes scales this complex number with the given scalar
@@ -197,6 +205,12 @@ data class Complex constructor(val real: Double, val imaginary: Double) {
         val (real1, imaginary1) = other as Complex
         return equal(real1, real) &&
                 equal(imaginary1, imaginary)
+    }
+
+    override fun hashCode(): Int {
+        var result = real.hashCode()
+        result = 31 * result + imaginary.hashCode()
+        return result
     }
 
     companion object {
