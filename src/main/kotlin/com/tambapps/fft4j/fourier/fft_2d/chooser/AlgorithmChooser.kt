@@ -1,4 +1,4 @@
-package com.tambapps.fft4j.fourier.fft_2d
+package com.tambapps.fft4j.fourier.fft_2d.chooser
 
 import com.tambapps.fft4j.fourier.fft_1d.FFTAlgorithm
 
