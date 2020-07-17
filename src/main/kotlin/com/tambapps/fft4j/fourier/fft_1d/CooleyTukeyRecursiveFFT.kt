@@ -17,7 +17,7 @@ class CooleyTukeyRecursiveFFT: AbstractFFTAlgorithm() {
         val evens = computeCopy(evensCopy(vector))
         val odds = computeCopy(oddsCopy(vector))
 
-        val T = Array(N / 2) { i -> odds[i].times(Complex.expI(-2.0 * Math.PI * i.toDouble() / N.toDouble())) }
+        val T = Array(N / 2) { i -> odds[i] * Complex.expI(-2.0 * Math.PI * i.toDouble() / N.toDouble()) }
 
         val result: CVector = ArrayCVector(N)
         for (i in 0 until N / 2) {
