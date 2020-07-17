@@ -53,7 +53,7 @@ class FourierAlgorithmsTest {
                 FourierAlgorithms.BASIC, FourierAlgorithms.CT_RECURSIVE)) {
             val result: CVector = expected.copy()
             inverse(algorithm).compute(result)
-            assertEquals("Should be equal", input, result)
+            assertEquals("Incorrect Fourier inverse for $algorithm", input, result)
         }
     }
 

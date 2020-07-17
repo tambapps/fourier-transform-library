@@ -30,18 +30,18 @@ class CooleyTukeyRecursiveFFT: AbstractFFTAlgorithm() {
 
     private fun evensCopy(vector: CVector): CVector {
         val size: Int = (vector.size + 1) / 2
-        return copy(vector, size)
+        return copy(vector, size, 0)
     }
 
     private fun oddsCopy(vector: CVector): CVector {
         val size: Int = vector.size / 2
-        return copy(vector, size)
+        return copy(vector, size, 1)
     }
     
-    private fun copy(vector: CVector, size: Int): CVector {
+    private fun copy(vector: CVector, size: Int, iStart: Int): CVector {
         val copy: CVector = ArrayCVector(size)
         var count = 0
-        var i = 1
+        var i = iStart
         while (i < vector.size) {
             copy[count] = vector[i]
             count++
