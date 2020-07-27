@@ -2,16 +2,32 @@ package com.tambapps.fft4j.fourier.fft_2d
 
 import com.tambapps.fft4j.complex.array2d.CArray2D
 import com.tambapps.fft4j.fourier.FourierException
+import com.tambapps.fft4j.fourier.fft_1d.FFTAlgorithm
+import com.tambapps.fft4j.fourier.fft_1d.FourierAlgorithms
 import com.tambapps.fft4j.fourier.fft_2d.chooser.AlgorithmChooser
 import com.tambapps.fft4j.fourier.fft_2d.task.FourierInverseColumnTask
 import com.tambapps.fft4j.fourier.fft_2d.task.FourierInverseRowTask
 import com.tambapps.fft4j.fourier.fft_2d.task.FourierTransformColumnTask
 import com.tambapps.fft4j.fourier.fft_2d.task.FourierTransformRowTask
+import com.tambapps.fft4j.fourier.util.Utils.is2Power
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 import java.util.concurrent.Future
 
 class FastFourierTransformer2D(private val executor: ExecutorService, var chooser: AlgorithmChooser) {
+
+    companion object {
+        val DEFAULT_CHOOSER: AlgorithmChooser = object : AlgorithmChooser {
+            override fun getAlgorithm(M: Int, N: Int): FFTAlgorithm {
+                return if (is2Power(M) && is2Power(N)) FourierAlgorithms.CT_RECURSIVE else FourierAlgorithms.BASIC
+            }
+        }
+    }
+
+    constructor(): this(Runtime.getRuntime().availableProcessors() + 1)
+    constructor(nbThreads: Int): this(nbThreads, DEFAULT_CHOOSER)
+    constructor(nbThreads: Int, chooser: AlgorithmChooser): this(Executors.newFixedThreadPool(nbThreads), chooser)
 
     @Throws(FourierException::class)
     fun transform(f: CArray2D) {
