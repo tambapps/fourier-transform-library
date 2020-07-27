@@ -31,7 +31,10 @@ class FastFourierTransformer2D(private val executor: ExecutorService, var choose
 
     @Throws(FourierException::class)
     fun transform(f: CArray2D) {
-        val algorithm = chooser.getAlgorithm(f.m, f.n)
+        transform(f, chooser.getAlgorithm(f.m, f.n))
+    }
+    @Throws(FourierException::class)
+    fun transform(f: CArray2D, algorithm: FFTAlgorithm) {
         compute(f, {  i -> FourierTransformRowTask(algorithm, f, i) },
                 { i -> FourierTransformColumnTask(algorithm, f, i) })
     }
