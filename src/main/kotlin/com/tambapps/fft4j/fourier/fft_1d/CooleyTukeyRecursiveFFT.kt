@@ -4,7 +4,7 @@ import com.tambapps.fft4j.complex.Complex
 import com.tambapps.fft4j.complex.vector.ArrayCVector
 import com.tambapps.fft4j.complex.vector.CVector
 
-class CooleyTukeyRecursiveFFT: AbstractFFTAlgorithm() {
+class CooleyTukeyRecursiveFFT: AbstractFastFourierTransform() {
 
     override val name = "Cooley-Tukey recursive"
     override val description = "Cooley-Tukey algorithm implemented recursively (input array must have power of 2 sizes)"

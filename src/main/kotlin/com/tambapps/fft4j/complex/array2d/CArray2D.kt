@@ -171,9 +171,7 @@ open class CArray2D {
         return array.contentHashCode()
     }
 
-    /**  override fun hashCode(): Int {
-            TODO("not implemented")
-        }
+    /**
      * Returns a copy of this array
      *
      * @return the copy

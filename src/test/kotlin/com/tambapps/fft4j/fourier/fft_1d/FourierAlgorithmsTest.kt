@@ -25,7 +25,7 @@ class FourierAlgorithmsTest {
             Complex.ZERO,
             Complex.of(1.0, 2.414214))
 
-    private fun algorithmTest(algorithm: FFTAlgorithm) {
+    private fun algorithmTest(algorithm: FastFourierTransform) {
         val result: CVector = input.copy()
         algorithm.compute(result)
         assertEquals("Should be equal", expected, result)

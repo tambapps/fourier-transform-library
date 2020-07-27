@@ -4,7 +4,7 @@ import com.tambapps.fft4j.complex.Complex
 import com.tambapps.fft4j.complex.vector.CVector
 import com.tambapps.fft4j.fourier.util.Utils.get2Exponent
 
-class CooleyTukeyIterativeFFT: AbstractFFTAlgorithm() {
+class CooleyTukeyIterativeFFT: AbstractFastFourierTransform() {
 
     override val name = "Cooley-Tukey iterative"
     override val description = "Cooley-Tukey algorithm implemented iteratively (input array must have power of 2 sizes)"

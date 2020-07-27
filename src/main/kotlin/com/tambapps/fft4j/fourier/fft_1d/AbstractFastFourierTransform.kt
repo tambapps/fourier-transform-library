@@ -3,7 +3,7 @@ package com.tambapps.fft4j.fourier.fft_1d
 import com.tambapps.fft4j.complex.vector.CVector
 
 // need to override computeCopy OR compute
-abstract class AbstractFFTAlgorithm: FFTAlgorithm {
+abstract class AbstractFastFourierTransform: FastFourierTransform {
 
 
     override fun invoke(vector: CVector) {

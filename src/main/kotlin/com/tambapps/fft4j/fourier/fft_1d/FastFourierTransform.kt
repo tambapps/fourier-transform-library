@@ -2,12 +2,11 @@ package com.tambapps.fft4j.fourier.fft_1d
 
 import com.tambapps.fft4j.complex.vector.CVector
 
-// TODO rename this class FastFourierTransform
 /**
  * Interface used to implement differents Fourier
  * Transform algorithms
  */
-interface FFTAlgorithm {
+interface FastFourierTransform {
     /**
      * Computes the Fourier transform in the
      * given vector

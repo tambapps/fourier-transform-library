@@ -4,7 +4,7 @@ import com.tambapps.fft4j.complex.Complex
 import com.tambapps.fft4j.complex.vector.ArrayCVector
 import com.tambapps.fft4j.complex.vector.CVector
 
-internal class BasicFFT: AbstractFFTAlgorithm() {
+internal class BasicFFT: AbstractFastFourierTransform() {
 
     override val name = "Basic"
     override val description = "Compute the sums like in the basic FFT formula"
