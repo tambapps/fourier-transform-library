@@ -7,6 +7,6 @@ import com.tambapps.fft4j.fourier.fft_1d.FastFourierTransform
 class FourierTransformRowTask(fft: FastFourierTransform, data: CArray2D, index: Int) : AbstractFourierRowTask(fft, data, index) {
 
     override fun computeVector(vector: CVector) {
-        fft.compute(vector)
+        fft.computeIn(vector)
     }
 }

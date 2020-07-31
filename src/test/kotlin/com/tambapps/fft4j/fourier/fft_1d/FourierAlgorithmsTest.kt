@@ -27,9 +27,9 @@ class FourierAlgorithmsTest {
 
     private fun algorithmTest(algorithm: FastFourierTransform) {
         val result: CVector = input.copy()
-        algorithm.compute(result)
+        algorithm.computeIn(result)
         assertEquals("Should be equal", expected, result)
-        assertEquals("Should be equal", expected, algorithm.computeCopy(input))
+        assertEquals("Should be equal", expected, algorithm.compute(input))
     }
 
     @Test

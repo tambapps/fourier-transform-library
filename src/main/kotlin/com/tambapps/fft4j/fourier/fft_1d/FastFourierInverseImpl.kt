@@ -9,7 +9,7 @@ class FastFourierInverseImpl(private val fft: FastFourierTransform): FastFourier
             vector[i] = vector[i].conj()
         }
 
-        fft.compute(vector)
+        fft.computeIn(vector)
 
         val iN = 1.0 / vector.size.toDouble()
         for (i in 0 until vector.size) {

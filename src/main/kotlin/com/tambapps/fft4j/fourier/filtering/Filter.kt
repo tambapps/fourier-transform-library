@@ -14,7 +14,7 @@ interface Filter {
     fun apply(array: CArray2D)
 
     /**
-     * same as apply (util for Groovy operator)
+     * same as apply
      *
      * @param array the array to filter
      */

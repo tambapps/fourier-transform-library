@@ -17,7 +17,7 @@ interface FastFourierInverse {
     fun compute(vector: CVector)
 
     /**
-     * same as compute (util for groovy operator)
+     * same as compute
      *
      * @param vector    the input of the fourier inverse
      */

@@ -13,7 +13,7 @@ interface FastFourierTransform {
      *
      * @param vector the input of the FT
      */
-    fun compute(vector: CVector)
+    fun computeIn(vector: CVector)
 
     /**
      * Computes the Fourier transform in the
@@ -22,10 +22,10 @@ interface FastFourierTransform {
      * @param vector the input of the FT
      * @return the FFT vector
      */
-    fun computeCopy(vector: CVector): CVector
+    fun compute(vector: CVector): CVector
 
     /**
-     * Same as compute (util for groovy operator)
+     * Same as compute
      *
      * @param vector the input of the FT
      */

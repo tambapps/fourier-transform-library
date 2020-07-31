@@ -7,17 +7,17 @@ abstract class AbstractFastFourierTransform: FastFourierTransform {
 
 
     override fun invoke(vector: CVector) {
-        compute(vector)
+        computeIn(vector)
     }
 
-    override fun computeCopy(vector: CVector): CVector {
+    override fun compute(vector: CVector): CVector {
         return vector.copy().also {
-            compute(it)
+            computeIn(it)
         }
     }
 
-    override fun compute(vector: CVector) {
-        val result: CVector = computeCopy(vector)
+    override fun computeIn(vector: CVector) {
+        val result: CVector = compute(vector)
         result.copy(vector)
     }
 

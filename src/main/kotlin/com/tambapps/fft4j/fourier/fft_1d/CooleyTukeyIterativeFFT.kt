@@ -9,7 +9,7 @@ class CooleyTukeyIterativeFFT: AbstractFastFourierTransform() {
     override val name = "Cooley-Tukey iterative"
     override val description = "Cooley-Tukey algorithm implemented iteratively (input array must have power of 2 sizes)"
 
-    override fun compute(vector: CVector) {
+    override fun computeIn(vector: CVector) {
         val n: Int = vector.size
 
         val bits = get2Exponent(n)

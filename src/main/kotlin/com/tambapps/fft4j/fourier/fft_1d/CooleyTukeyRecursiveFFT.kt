@@ -9,13 +9,13 @@ class CooleyTukeyRecursiveFFT: AbstractFastFourierTransform() {
     override val name = "Cooley-Tukey recursive"
     override val description = "Cooley-Tukey algorithm implemented recursively (input array must have power of 2 sizes)"
 
-    override fun computeCopy(vector: CVector): CVector {
+    override fun compute(vector: CVector): CVector {
         val N: Int = vector.size
         if (N <= 1) {
             return vector
         }
-        val evens = computeCopy(evensCopy(vector))
-        val odds = computeCopy(oddsCopy(vector))
+        val evens = compute(evensCopy(vector))
+        val odds = compute(oddsCopy(vector))
 
         val T = Array(N / 2) { i -> odds[i] * Complex.expI(-2.0 * Math.PI * i.toDouble() / N.toDouble()) }
 

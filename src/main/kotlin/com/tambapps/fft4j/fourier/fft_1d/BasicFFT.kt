@@ -9,7 +9,7 @@ internal class BasicFFT: AbstractFastFourierTransform() {
     override val name = "Basic"
     override val description = "Compute the sums like in the basic FFT formula"
 
-    override fun computeCopy(vector: CVector): CVector {
+    override fun compute(vector: CVector): CVector {
         val result: CVector = ArrayCVector(vector.size)
         val N = vector.size.toDouble()
         for (k in 0 until vector.size) {
