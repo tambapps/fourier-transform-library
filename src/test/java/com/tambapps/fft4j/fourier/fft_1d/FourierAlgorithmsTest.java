@@ -31,7 +31,7 @@ public class FourierAlgorithmsTest {
       Complex.ZERO,
       Complex.of(1, 2.414214));
 
-  private void algorithmTest(FFTAlgorithm algorithm) {
+  private void algorithmTest(FastFourierTransform algorithm) {
     CVector result = input.copy();
     algorithm.compute(result);
     assertEquals("Should be equal", expected, result);
@@ -55,7 +55,7 @@ public class FourierAlgorithmsTest {
 
   @Test
   public void inverseTest() {
-    for (FFTAlgorithm algorithm : Arrays.asList(FourierAlgorithms.CT_ITERATIVE,
+    for (FastFourierTransform algorithm : Arrays.asList(FourierAlgorithms.CT_ITERATIVE,
       FourierAlgorithms.BASIC, FourierAlgorithms.CT_RECURSIVE)) {
       CVector result = expected.copy();
       FourierAlgorithms.inverse(algorithm).compute(result);

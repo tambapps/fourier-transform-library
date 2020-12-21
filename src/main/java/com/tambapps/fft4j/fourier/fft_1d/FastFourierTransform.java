@@ -6,7 +6,7 @@ import com.tambapps.fft4j.util.CVector;
  * Interface used to implement differents Fourier
  * Transform algorithms
  */
-public interface FFTAlgorithm {
+public interface FastFourierTransform {
 
   /**
    * Computes the Fourier transform in the

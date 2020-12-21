@@ -6,7 +6,7 @@ import com.tambapps.fft4j.util.CVector;
  * Fast Fourier Inverse Algorithm.
  * Interface used to compute Fourier Inverse.
  */
-public interface FFITAlgorithm {
+public interface FastFourierInverse {
 
   /**
    * Computes the fourier inverse in the given vector

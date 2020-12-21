@@ -1,7 +1,7 @@
 package com.tambapps.fft4j.fourier.fft_2d;
 
 import com.tambapps.fft4j.carray2d.CArray2D;
-import com.tambapps.fft4j.fourier.fft_1d.FFTAlgorithm;
+import com.tambapps.fft4j.fourier.fft_1d.FastFourierTransform;
 import com.tambapps.fft4j.fourier.fft_1d.FourierAlgorithms;
 import com.tambapps.fft4j.fourier.util.Utils;
 import com.tambapps.fft4j.util.CVector;
@@ -21,7 +21,7 @@ public class FastFourierTransformer2D {
 
   public static final AlgorithmChooser DEFAULT_CHOOSER = new AlgorithmChooser() {
     @Override
-    public FFTAlgorithm getAlgorithm(int M, int N) {
+    public FastFourierTransform getAlgorithm(int M, int N) {
       return Utils.is2Power(M) && Utils.is2Power(N) ?
         FourierAlgorithms.CT_RECURSIVE :
         FourierAlgorithms.BASIC;
@@ -61,7 +61,7 @@ public class FastFourierTransformer2D {
      * @param algorithm the algorithm used for the computation
      * @return true if it was a success
      */
-  public boolean transform(CArray2D f, FFTAlgorithm algorithm) {
+  public boolean transform(CArray2D f, FastFourierTransform algorithm) {
     return compute(f, false, true, algorithm) && compute(f, false, false, algorithm);
   }
 
@@ -82,7 +82,7 @@ public class FastFourierTransformer2D {
    * @param algorithm the algorithm used for the computation
    * @return true if it was a success
    */
-  public boolean inverse(CArray2D f, FFTAlgorithm algorithm) {
+  public boolean inverse(CArray2D f, FastFourierTransform algorithm) {
     return compute(f, true, true, algorithm) && compute(f, true, false, algorithm);
   }
 
@@ -97,7 +97,7 @@ public class FastFourierTransformer2D {
   }
 
   private boolean compute(CArray2D f, final boolean inverse, final boolean row,
-                          FFTAlgorithm algorithm) {
+                          FastFourierTransform algorithm) {
     List<Future> futures = new ArrayList<>();
     int count = row ? f.getM() : f.getN();
 
@@ -131,12 +131,12 @@ public class FastFourierTransformer2D {
 
   private abstract class FourierTask implements Runnable {
 
-    protected final FFTAlgorithm algorithm;
+    protected final FastFourierTransform algorithm;
     private final CArray2D data;
     private final int index;
     private final boolean row;
 
-    FourierTask(FFTAlgorithm algorithm, CArray2D data, int index, boolean row) {
+    FourierTask(FastFourierTransform algorithm, CArray2D data, int index, boolean row) {
       this.algorithm = algorithm;
       this.data = data;
       this.index = index;
@@ -161,7 +161,7 @@ public class FastFourierTransformer2D {
    */
   private class TransformTask extends FourierTask {
 
-    TransformTask(FFTAlgorithm algorithm, CArray2D data, int i, boolean row) {
+    TransformTask(FastFourierTransform algorithm, CArray2D data, int i, boolean row) {
       super(algorithm, data, i, row);
     }
 
@@ -178,7 +178,7 @@ public class FastFourierTransformer2D {
    */
   private class InverseTask extends FourierTask {
 
-    InverseTask(FFTAlgorithm algorithm, CArray2D data, int i, boolean row) {
+    InverseTask(FastFourierTransform algorithm, CArray2D data, int i, boolean row) {
       super(algorithm, data, i, row);
     }
 

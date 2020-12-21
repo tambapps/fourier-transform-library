@@ -14,25 +14,25 @@ public final class FourierAlgorithms {
    * A basic implementation of the FFT <br>
    * Implemented the computation like in the basic formula
    */
-  public static final FFTAlgorithm BASIC = new BasicFFT();
+  public static final FastFourierTransform BASIC = new BasicFFT();
   /**
    * Cooley-Tukey algorithm implemented recursively. <br>
    * Input size must be a power of two
    */
-  public static final FFTAlgorithm CT_RECURSIVE = new CooleyTukeyRecursiveFFT();
+  public static final FastFourierTransform CT_RECURSIVE = new CooleyTukeyRecursiveFFT();
 
   /**
    * Cooley-Tukey algorithm implemented iteratively. <br>
    * Input size must be a power of two
    */
-  public static final FFTAlgorithm CT_ITERATIVE = new CooleyTukeyIterativeFFT();
+  public static final FastFourierTransform CT_ITERATIVE = new CooleyTukeyIterativeFFT();
 
   /**
    * Inverse algorithm. The inverse algorithm use a FFT algorithm given
    * as a parameter.
    */
-  public static FFITAlgorithm inverse(FFTAlgorithm algorithm) {
-    return new FFITAlgorithmImpl(algorithm);
+  public static FastFourierInverse inverse(FastFourierTransform algorithm) {
+    return new FastFourierInverseImpl(algorithm);
   }
 
   private FourierAlgorithms() {}
@@ -212,7 +212,7 @@ public final class FourierAlgorithms {
     }
   }
 
-  private abstract static class AbstractFFTAlgorithm implements FFTAlgorithm {
+  private abstract static class AbstractFFTAlgorithm implements FastFourierTransform {
     @Override
     public void call(CVector vector) {
       compute(vector);
@@ -230,10 +230,10 @@ public final class FourierAlgorithms {
    * Inverse a Fourier Transformed vector using a given FFT algorithm
    *
    */
-  private static class FFITAlgorithmImpl implements FFITAlgorithm {
-    private final FFTAlgorithm algorithm;
+  private static class FastFourierInverseImpl implements FastFourierInverse {
+    private final FastFourierTransform algorithm;
 
-    private FFITAlgorithmImpl(FFTAlgorithm algorithm) {
+    private FastFourierInverseImpl(FastFourierTransform algorithm) {
       this.algorithm = algorithm;
     }
 
