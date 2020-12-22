@@ -3,8 +3,9 @@ package com.tambapps.fft4j.fourier.fft_2d;
 import com.tambapps.fft4j.complex.array2d.CArray2D;
 import com.tambapps.fft4j.fourier.fft_1d.FastFourierTransform;
 import com.tambapps.fft4j.fourier.fft_1d.FastFouriers;
+import com.tambapps.fft4j.fourier.fft_2d.task.FourierInverseTask;
+import com.tambapps.fft4j.fourier.fft_2d.task.FourierTransformTask;
 import com.tambapps.fft4j.fourier.util.Utils;
-import com.tambapps.fft4j.complex.vector.CVector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,9 +99,9 @@ public class FastFourierTransformer2D {
 
     for (int i = 0; i < count; i++) {
       if (inverse) {
-        futures.add(executorService.submit(new InverseTask(algorithm, f, i, row)));
+        futures.add(executorService.submit(new FourierInverseTask(row ? f.getRow(i) : f.getColumn(i) ,algorithm)));
       } else {
-        futures.add(executorService.submit(new TransformTask(algorithm, f, i, row)));
+        futures.add(executorService.submit(new FourierTransformTask(row ? f.getRow(i) : f.getColumn(i) ,algorithm)));
       }
     }
     boolean success = true;
@@ -121,67 +122,6 @@ public class FastFourierTransformer2D {
    */
   public void setChooser(FastFourierElector chooser) {
     this.chooser = chooser;
-  }
-
-
-  private abstract class FourierTask implements Runnable {
-
-    protected final FastFourierTransform algorithm;
-    private final CArray2D data;
-    private final int index;
-    private final boolean row;
-
-    FourierTask(FastFourierTransform algorithm, CArray2D data, int index, boolean row) {
-      this.algorithm = algorithm;
-      this.data = data;
-      this.index = index;
-      this.row = row;
-    }
-
-    @Override
-    public final void run() {
-      if (row) {
-        computeVector(data.getRow(index));
-      } else {
-        computeVector(data.getColumn(index));
-      }
-    }
-
-    abstract void computeVector(CVector vector);
-  }
-
-
-  /**
-   * Task that will compute the FFT for many columns/rows
-   */
-  private class TransformTask extends FourierTask {
-
-    TransformTask(FastFourierTransform algorithm, CArray2D data, int i, boolean row) {
-      super(algorithm, data, i, row);
-    }
-
-    @Override
-    void computeVector(CVector vector) {
-      algorithm.compute(vector);
-    }
-
-  }
-
-
-  /**
-   * Task that will compute the inverse FFT for a given row/column
-   */
-  private class InverseTask extends FourierTask {
-
-    InverseTask(FastFourierTransform algorithm, CArray2D data, int i, boolean row) {
-      super(algorithm, data, i, row);
-    }
-
-    @Override
-    void computeVector(CVector vector) {
-      FastFouriers.inverse(algorithm).compute(vector);
-    }
-
   }
 
 }
