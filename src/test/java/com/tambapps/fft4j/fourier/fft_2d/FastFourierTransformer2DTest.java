@@ -17,10 +17,11 @@ public class FastFourierTransformer2DTest {
 
   @Test
   public void testSuccess() {
+    final int M = 300;
     final int N = 256;
     Random random = new Random();
-    CArray2D array2D = new CArray2D(N, N);
-    for (int i = 0; i < N * N; i++) {
+    CArray2D array2D = new CArray2D(M, N);
+    for (int i = 0; i < M * N; i++) {
       array2D.set(i, Complex.of(random.nextDouble() % LIMIT));
     }
 
@@ -29,7 +30,7 @@ public class FastFourierTransformer2DTest {
     assertTrue("Should be true", transformer2D.inverse(array2D));
 
 
-    for (int i = 0; i < N * N; i++) {
+    for (int i = 0; i < M * N; i++) {
       assertEquals("Should be equal",originArray.get(i), array2D.get(i));
     }
   }

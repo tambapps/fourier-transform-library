@@ -1,6 +1,7 @@
 package com.tambapps.fft4j.fourier.fft_2d;
 
 import com.tambapps.fft4j.complex.array2d.CArray2D;
+import com.tambapps.fft4j.complex.vector.CVector;
 import com.tambapps.fft4j.fourier.fft_1d.FastFourierTransform;
 import com.tambapps.fft4j.fourier.fft_1d.FastFouriers;
 import com.tambapps.fft4j.fourier.fft_2d.task.FourierInverseTask;
@@ -13,6 +14,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.function.Function;
 
 /**
  * This is the class that applies 2D Fast Fourier Transform
@@ -58,7 +60,7 @@ public class FastFourierTransformer2D {
      * @return true if it was a success
      */
   public boolean transform(CArray2D f, FastFourierTransform algorithm) {
-    return compute(f, false, true, algorithm) && compute(f, false, false, algorithm);
+    return compute(false, f.getM(), f::getRow, algorithm) && compute(false, f.getN(), f::getColumn, algorithm);
   }
 
   /**
@@ -79,7 +81,7 @@ public class FastFourierTransformer2D {
    * @return true if it was a success
    */
   public boolean inverse(CArray2D f, FastFourierTransform algorithm) {
-    return compute(f, true, true, algorithm) && compute(f, true, false, algorithm);
+    return compute(true, f.getM(), f::getRow, algorithm) && compute(true, f.getN(), f::getColumn, algorithm);
   }
 
   /**
@@ -92,16 +94,15 @@ public class FastFourierTransformer2D {
     return inverse(f, chooser.elect(f.getM(), f.getN()));
   }
 
-  private boolean compute(CArray2D f, final boolean inverse, final boolean row,
+  private boolean compute(final boolean inverse, int count, Function<Integer, CVector> vectorExtractor,
                           FastFourierTransform algorithm) {
     List<Future<?>> futures = new ArrayList<>();
-    int count = row ? f.getM() : f.getN();
 
     for (int i = 0; i < count; i++) {
       if (inverse) {
-        futures.add(executorService.submit(new FourierInverseTask(row ? f.getRow(i) : f.getColumn(i) ,algorithm)));
+        futures.add(executorService.submit(new FourierInverseTask(vectorExtractor.apply(i) ,algorithm)));
       } else {
-        futures.add(executorService.submit(new FourierTransformTask(row ? f.getRow(i) : f.getColumn(i) ,algorithm)));
+        futures.add(executorService.submit(new FourierTransformTask(vectorExtractor.apply(i) ,algorithm)));
       }
     }
     boolean success = true;
