@@ -14,6 +14,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
@@ -60,7 +61,8 @@ public class FastFourierTransformer2D {
      * @return true if it was a success
      */
   public boolean transform(CArray2D f, FastFourierTransform algorithm) {
-    return compute(false, f.getM(), f::getRow, algorithm) && compute(false, f.getN(), f::getColumn, algorithm);
+    BiFunction<CVector, FastFourierTransform, Runnable> taskCreator = FourierTransformTask::new;
+    return compute(taskCreator, f.getM(), f::getRow, algorithm) && compute(taskCreator, f.getN(), f::getColumn, algorithm);
   }
 
   /**
@@ -81,7 +83,8 @@ public class FastFourierTransformer2D {
    * @return true if it was a success
    */
   public boolean inverse(CArray2D f, FastFourierTransform algorithm) {
-    return compute(true, f.getM(), f::getRow, algorithm) && compute(true, f.getN(), f::getColumn, algorithm);
+    BiFunction<CVector, FastFourierTransform, Runnable> taskCreator = FourierInverseTask::new;
+    return compute(taskCreator, f.getM(), f::getRow, algorithm) && compute(taskCreator, f.getN(), f::getColumn, algorithm);
   }
 
   /**
@@ -94,16 +97,13 @@ public class FastFourierTransformer2D {
     return inverse(f, chooser.elect(f.getM(), f.getN()));
   }
 
-  private boolean compute(final boolean inverse, int count, Function<Integer, CVector> vectorExtractor,
-                          FastFourierTransform algorithm) {
+  private boolean compute(BiFunction<CVector, FastFourierTransform, Runnable> taskCreator, int count, Function<Integer, CVector> vectorExtractor,
+      FastFourierTransform algorithm) {
+    // TODO make this thread compute something too!
     List<Future<?>> futures = new ArrayList<>();
 
     for (int i = 0; i < count; i++) {
-      if (inverse) {
-        futures.add(executorService.submit(new FourierInverseTask(vectorExtractor.apply(i) ,algorithm)));
-      } else {
-        futures.add(executorService.submit(new FourierTransformTask(vectorExtractor.apply(i) ,algorithm)));
-      }
+      futures.add(executorService.submit(taskCreator.apply(vectorExtractor.apply(i) ,algorithm)));
     }
     boolean success = true;
     for (int i = 0; i < count; i++) {
