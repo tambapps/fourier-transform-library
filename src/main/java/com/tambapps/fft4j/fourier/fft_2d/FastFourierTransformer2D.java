@@ -19,17 +19,12 @@ import java.util.concurrent.Future;
  */
 public class FastFourierTransformer2D {
 
-  public static final AlgorithmChooser DEFAULT_CHOOSER = new AlgorithmChooser() {
-    @Override
-    public FastFourierTransform getAlgorithm(int M, int N) {
-      return Utils.is2Power(M) && Utils.is2Power(N) ?
-        FourierAlgorithms.CT_RECURSIVE :
-        FourierAlgorithms.BASIC;
-    }
-  };
+  public static final FastFourierElector DEFAULT_CHOOSER = (M, N) -> Utils.is2Power(M) && Utils.is2Power(N) ?
+    FourierAlgorithms.CT_RECURSIVE :
+    FourierAlgorithms.BASIC;
 
   private final ExecutorService executorService;
-  private AlgorithmChooser chooser;
+  private FastFourierElector chooser;
 
   public FastFourierTransformer2D() {
     this(Runtime.getRuntime().availableProcessors() + 1);
@@ -72,7 +67,7 @@ public class FastFourierTransformer2D {
    * @return true if it was a success
    */
   public boolean transform(CArray2D f) {
-    return transform(f, chooser.getAlgorithm(f.getM(), f.getN()));
+    return transform(f, chooser.elect(f.getM(), f.getN()));
   }
 
   /**
@@ -93,7 +88,7 @@ public class FastFourierTransformer2D {
    * @return true if it was a success
    */
   public boolean inverse(CArray2D f) {
-    return inverse(f, chooser.getAlgorithm(f.getM(), f.getN()));
+    return inverse(f, chooser.elect(f.getM(), f.getN()));
   }
 
   private boolean compute(CArray2D f, final boolean inverse, final boolean row,
@@ -124,7 +119,7 @@ public class FastFourierTransformer2D {
    *
    * @param chooser the new algorithm chooser
    */
-  public void setChooser(AlgorithmChooser chooser) {
+  public void setChooser(FastFourierElector chooser) {
     this.chooser = chooser;
   }
 

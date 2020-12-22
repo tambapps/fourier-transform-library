@@ -5,7 +5,7 @@ import com.tambapps.fft4j.fourier.fft_1d.FastFourierTransform;
 /**
  * Class that choose a FFT Algorithm given a 2D array size
  */
-public interface AlgorithmChooser {
+public interface FastFourierElector {
 
   /**
    * Get an algorithm given the dimensions of a 2D array
@@ -14,6 +14,6 @@ public interface AlgorithmChooser {
    * @param N the 2nd dimension of the 2D array
    * @return the FFT algorithm
    */
-  FastFourierTransform getAlgorithm(int M, int N);
+  FastFourierTransform elect(int M, int N);
 
 }
