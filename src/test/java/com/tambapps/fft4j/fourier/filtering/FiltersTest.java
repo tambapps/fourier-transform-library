@@ -2,7 +2,7 @@ package com.tambapps.fft4j.fourier.filtering;
 
 import static org.junit.Assert.assertEquals;
 
-import com.tambapps.fft4j.carray2d.CArray2D;
+import com.tambapps.fft4j.complex.array2d.CArray2D;
 import com.tambapps.fft4j.complex.Complex;
 import org.junit.Test;
 

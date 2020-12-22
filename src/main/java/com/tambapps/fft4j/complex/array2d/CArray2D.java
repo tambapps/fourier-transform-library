@@ -1,8 +1,8 @@
-package com.tambapps.fft4j.carray2d;
+package com.tambapps.fft4j.complex.array2d;
 
 import com.tambapps.fft4j.complex.Complex;
-import com.tambapps.fft4j.util.AbstractCVector;
-import com.tambapps.fft4j.util.CVector;
+import com.tambapps.fft4j.complex.vector.AbstractCVector;
+import com.tambapps.fft4j.complex.vector.CVector;
 
 import java.util.Arrays;
 import java.util.Objects;

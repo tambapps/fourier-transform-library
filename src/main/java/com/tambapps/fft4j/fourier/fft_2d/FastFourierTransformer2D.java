@@ -1,10 +1,10 @@
 package com.tambapps.fft4j.fourier.fft_2d;
 
-import com.tambapps.fft4j.carray2d.CArray2D;
+import com.tambapps.fft4j.complex.array2d.CArray2D;
 import com.tambapps.fft4j.fourier.fft_1d.FastFourierTransform;
 import com.tambapps.fft4j.fourier.fft_1d.FourierAlgorithms;
 import com.tambapps.fft4j.fourier.util.Utils;
-import com.tambapps.fft4j.util.CVector;
+import com.tambapps.fft4j.complex.vector.CVector;
 
 import java.util.ArrayList;
 import java.util.List;

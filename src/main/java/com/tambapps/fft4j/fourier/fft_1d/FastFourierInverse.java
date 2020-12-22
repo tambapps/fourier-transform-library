@@ -1,6 +1,6 @@
 package com.tambapps.fft4j.fourier.fft_1d;
 
-import com.tambapps.fft4j.util.CVector;
+import com.tambapps.fft4j.complex.vector.CVector;
 
 /**
  * Fast Fourier Inverse Algorithm.

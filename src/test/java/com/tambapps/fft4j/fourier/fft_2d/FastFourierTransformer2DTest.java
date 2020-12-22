@@ -3,12 +3,11 @@ package com.tambapps.fft4j.fourier.fft_2d;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import com.tambapps.fft4j.carray2d.CArray2D;
+import com.tambapps.fft4j.complex.array2d.CArray2D;
 import com.tambapps.fft4j.complex.Complex;
 import org.junit.Test;
 
 import java.util.Random;
-import java.util.concurrent.Executors;
 
 public class FastFourierTransformer2DTest {
 

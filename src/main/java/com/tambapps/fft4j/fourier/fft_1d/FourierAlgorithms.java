@@ -2,8 +2,8 @@ package com.tambapps.fft4j.fourier.fft_1d;
 
 import com.tambapps.fft4j.complex.Complex;
 import com.tambapps.fft4j.fourier.util.Utils;
-import com.tambapps.fft4j.util.ArrayCVector;
-import com.tambapps.fft4j.util.CVector;
+import com.tambapps.fft4j.complex.vector.ArrayCVector;
+import com.tambapps.fft4j.complex.vector.CVector;
 
 /**
  * Class that implements multiple 1D FFT algorithms

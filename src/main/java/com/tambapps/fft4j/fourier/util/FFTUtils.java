@@ -1,6 +1,6 @@
 package com.tambapps.fft4j.fourier.util;
 
-import com.tambapps.fft4j.carray2d.CArray2D;
+import com.tambapps.fft4j.complex.array2d.CArray2D;
 import com.tambapps.fft4j.complex.Complex;
 
 /**

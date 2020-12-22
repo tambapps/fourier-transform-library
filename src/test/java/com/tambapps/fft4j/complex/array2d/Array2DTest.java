@@ -1,7 +1,7 @@
-package com.tambapps.fft4j.carray2d;
+package com.tambapps.fft4j.complex.array2d;
 
 import com.tambapps.fft4j.complex.Complex;
-import com.tambapps.fft4j.util.CVector;
+import com.tambapps.fft4j.complex.vector.CVector;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.tambapps.fft4j.util;
+package com.tambapps.fft4j.complex.vector;
 
 import com.tambapps.fft4j.complex.Complex;
 

@@ -3,9 +3,9 @@ package com.tambapps.fft4j.fourier.fft_1d;
 import static org.junit.Assert.assertEquals;
 
 import com.tambapps.fft4j.complex.Complex;
-import com.tambapps.fft4j.util.CVector;
+import com.tambapps.fft4j.complex.vector.CVector;
 
-import com.tambapps.fft4j.util.ImmutableCVector;
+import com.tambapps.fft4j.complex.vector.ImmutableCVector;
 import org.junit.Test;
 
 import java.util.Arrays;
