@@ -24,9 +24,10 @@ import java.util.function.Function;
 public class FastFourierTransformer2D {
 
   public static final FastFourierElector DEFAULT_CHOOSER = (M, N) -> Utils.is2Power(M) && Utils.is2Power(N) ?
-    FastFouriers.CT_RECURSIVE :
-    FastFouriers.BASIC;
+      FastFouriers.CT_RECURSIVE :
+      FastFouriers.BASIC;
 
+  private final int nbThreads;
   private final ExecutorService executorService;
   private FastFourierElector chooser;
 
@@ -40,26 +41,30 @@ public class FastFourierTransformer2D {
    * @param nbThreads the number of threads used by the executor
    */
   public FastFourierTransformer2D(int nbThreads) {
-    chooser = DEFAULT_CHOOSER;
-    executorService = Executors.newFixedThreadPool(nbThreads);
+    this(nbThreads, Executors.newFixedThreadPool(nbThreads));
   }
 
   /**
-   * Creates a FFT2DComputer that will use the given ExecutorService to process FFT
-   * @param service the executor service
+   * Creates a FFT2DComputer with the provided executor that will use the specified number of threads
+   *
+   * @param nbThreads the number of threads used by the executor
    */
-  public FastFourierTransformer2D(ExecutorService service) {
-    this.executorService = service;
+  public FastFourierTransformer2D(int nbThreads, ExecutorService executorService) {
+    if (nbThreads <= 0) {
+      throw new IllegalArgumentException("nbThreads should be greater than 0");
+    }
+    this.nbThreads = nbThreads;
     chooser = DEFAULT_CHOOSER;
+    this.executorService = executorService;
   }
 
   /**
-     * Computes the FFT in the given array, with the given FFT algorithm
-     *
-     * @param f         the input
-     * @param algorithm the algorithm used for the computation
-     * @return true if it was a success
-     */
+   * Computes the FFT in the given array, with the given FFT algorithm
+   *
+   * @param f         the input
+   * @param algorithm the algorithm used for the computation
+   * @return true if it was a success
+   */
   public boolean transform(CArray2D f, FastFourierTransform algorithm) {
     BiFunction<CVector, FastFourierTransform, Runnable> taskCreator = FourierTransformTask::new;
     return compute(taskCreator, f.getM(), f::getRow, algorithm) && compute(taskCreator, f.getN(), f::getColumn, algorithm);
@@ -99,16 +104,21 @@ public class FastFourierTransformer2D {
 
   private boolean compute(BiFunction<CVector, FastFourierTransform, Runnable> taskCreator, int count, Function<Integer, CVector> vectorExtractor,
       FastFourierTransform algorithm) {
-    // TODO make this thread compute something too!
     List<Future<?>> futures = new ArrayList<>();
 
-    for (int i = 0; i < count; i++) {
+    int threadHandledTasksCount = (int) (((float)count) * ((float) nbThreads - 1)/ ((float) nbThreads));
+    for (int i = 0; i < threadHandledTasksCount; i++) {
       futures.add(executorService.submit(taskCreator.apply(vectorExtractor.apply(i) ,algorithm)));
     }
+
+    // also make the main thread work
+    for (int i = threadHandledTasksCount; i < count; i++) {
+      taskCreator.apply(vectorExtractor.apply(i) ,algorithm).run();
+    }
     boolean success = true;
-    for (int i = 0; i < count; i++) {
+    for (Future<?> future : futures) {
       try {
-        futures.get(i).get();
+        future.get();
       } catch (InterruptedException | ExecutionException e) {
         success = false;
       }
@@ -125,4 +135,7 @@ public class FastFourierTransformer2D {
     this.chooser = chooser;
   }
 
+  public void shuntDown() {
+    executorService.shutdown();
+  }
 }
