@@ -13,11 +13,6 @@ public abstract class AbstractFilter implements Filter {
     apply(array, array);
   }
 
-  @Override
-  public void call(CArray2D array) {
-    apply(array);
-  }
-
   private void apply(CArray2D input, CArray2D output) {
     final int M = input.getM();
     final int N = input.getN();

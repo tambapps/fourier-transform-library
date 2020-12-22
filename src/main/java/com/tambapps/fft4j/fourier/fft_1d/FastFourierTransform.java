@@ -26,11 +26,13 @@ public interface FastFourierTransform {
   CVector computeCopy(CVector vector);
 
   /**
-   * Same as comput (util for groovy operator)
+   * Same as compute (util for groovy operator)
    *
    * @param vector the input of the FT
    */
-  void call(CVector vector);
+  default void call(CVector vector) {
+    compute(vector);
+  }
 
   /**
    * Provides the name of the algorithm

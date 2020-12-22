@@ -19,7 +19,9 @@ public interface Filter {
    *
    * @param array the array to filter
    */
-  void call(CArray2D array);
+  default void call(CArray2D array) {
+    apply(array);
+  }
 
   /**
    * Applies the filter on a copied array and returns it

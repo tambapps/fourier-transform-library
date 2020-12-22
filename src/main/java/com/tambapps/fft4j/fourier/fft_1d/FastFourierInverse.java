@@ -21,6 +21,8 @@ public interface FastFourierInverse {
    *
    * @param vector    the input of the fourier inverse
    */
-  void call(CVector vector);
+  default void call(CVector vector) {
+    compute(vector);
+  }
 
 }

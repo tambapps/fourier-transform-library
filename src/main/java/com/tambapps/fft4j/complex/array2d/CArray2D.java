@@ -255,7 +255,8 @@ public class CArray2D {
 
 
   private class Column extends AbstractCVector {
-    final int c;
+
+    private final int c;
 
     Column(int c) {
       this.c = c;
@@ -279,7 +280,8 @@ public class CArray2D {
 
 
   private class Row extends AbstractCVector {
-    private int r;
+
+    private final int r;
 
     Row(int r) {
       this.r = r;

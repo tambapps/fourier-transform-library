@@ -93,7 +93,7 @@ public class FastFourierTransformer2D {
 
   private boolean compute(CArray2D f, final boolean inverse, final boolean row,
                           FastFourierTransform algorithm) {
-    List<Future> futures = new ArrayList<>();
+    List<Future<?>> futures = new ArrayList<>();
     int count = row ? f.getM() : f.getN();
 
     for (int i = 0; i < count; i++) {
