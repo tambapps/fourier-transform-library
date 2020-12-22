@@ -2,7 +2,7 @@ package com.tambapps.fft4j.fourier.fft_2d;
 
 import com.tambapps.fft4j.complex.array2d.CArray2D;
 import com.tambapps.fft4j.fourier.fft_1d.FastFourierTransform;
-import com.tambapps.fft4j.fourier.fft_1d.FourierAlgorithms;
+import com.tambapps.fft4j.fourier.fft_1d.FastFouriers;
 import com.tambapps.fft4j.fourier.util.Utils;
 import com.tambapps.fft4j.complex.vector.CVector;
 
@@ -20,8 +20,8 @@ import java.util.concurrent.Future;
 public class FastFourierTransformer2D {
 
   public static final FastFourierElector DEFAULT_CHOOSER = (M, N) -> Utils.is2Power(M) && Utils.is2Power(N) ?
-    FourierAlgorithms.CT_RECURSIVE :
-    FourierAlgorithms.BASIC;
+    FastFouriers.CT_RECURSIVE :
+    FastFouriers.BASIC;
 
   private final ExecutorService executorService;
   private FastFourierElector chooser;
@@ -179,7 +179,7 @@ public class FastFourierTransformer2D {
 
     @Override
     void computeVector(CVector vector) {
-      FourierAlgorithms.inverse(algorithm).compute(vector);
+      FastFouriers.inverse(algorithm).compute(vector);
     }
 
   }

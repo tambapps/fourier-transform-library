@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
-public class FourierAlgorithmsTest {
+public class FastFouriersTest {
 
   private final static Complex ONE = Complex.of(1);
   private final CVector input = ImmutableCVector.of(ONE,
@@ -40,25 +40,25 @@ public class FourierAlgorithmsTest {
 
   @Test
   public void basicTest() {
-    algorithmTest(FourierAlgorithms.BASIC);
+    algorithmTest(FastFouriers.BASIC);
   }
 
   @Test
   public void recursiveTest() {
-    algorithmTest(FourierAlgorithms.CT_RECURSIVE);
+    algorithmTest(FastFouriers.CT_RECURSIVE);
   }
 
   @Test
   public void iterativeTest() {
-    algorithmTest(FourierAlgorithms.CT_ITERATIVE);
+    algorithmTest(FastFouriers.CT_ITERATIVE);
   }
 
   @Test
   public void inverseTest() {
-    for (FastFourierTransform algorithm : Arrays.asList(FourierAlgorithms.CT_ITERATIVE,
-      FourierAlgorithms.BASIC, FourierAlgorithms.CT_RECURSIVE)) {
+    for (FastFourierTransform algorithm : Arrays.asList(FastFouriers.CT_ITERATIVE,
+      FastFouriers.BASIC, FastFouriers.CT_RECURSIVE)) {
       CVector result = expected.copy();
-      FourierAlgorithms.inverse(algorithm).compute(result);
+      FastFouriers.inverse(algorithm).compute(result);
       assertEquals("Should be equal", input, result);
     }
   }

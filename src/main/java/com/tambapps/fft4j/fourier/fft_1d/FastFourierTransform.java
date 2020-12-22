@@ -23,7 +23,11 @@ public interface FastFourierTransform {
    * @param vector the input of the FT
    * @return the FFT vector
    */
-  CVector computeCopy(CVector vector);
+  default CVector computeCopy(CVector vector) {
+    CVector result = vector.copy();
+    compute(result);
+    return result;
+  }
 
   /**
    * Same as compute (util for groovy operator)
