@@ -12,6 +12,8 @@ You can import it with maven.
   <version>1.0</version>
 </dependency>
 ```
+
+You can consult the Javadoc [here](https://tambapps.github.io/fourier-transform-library/javadoc/)
 ## 1D Fast Fourier Transform
 Here is an example of a 1D fast fourier transform. There are several algorithms to perform FFT
 You can see all of them on the FourierAlgorithms class.
