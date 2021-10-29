@@ -1,3 +1,4 @@
+
 # Java Fourier Transform Library
 
 This is a library for computing 1-2 dimensional Fourier Transform. It was written with Java 8
@@ -73,6 +74,11 @@ recFilter(array)
 display(array)
 ```
 
+## Example use case
+You can consult the [fft-image-processing repo](https://github.com/nelson888/fft-image-processing), an app that transforms images using FFT
+![fft-image-processing-screenshot-1](https://raw.githubusercontent.com/nelson888/fft-image-processing/master/screenshots/sample1.png)
+
+![fft-image-processing-screenshot-2](https://raw.githubusercontent.com/nelson888/fft-image-processing/master/screenshots/sample2.png)
 ## Web link
 
 [Link](https://tambapps.github.io/fourier-transform-library/)
