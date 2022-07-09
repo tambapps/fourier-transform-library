@@ -8,7 +8,8 @@ import com.tambapps.fft4j.complex.vector.CVector;
  * Compute the FFT in the given vector
  * with the recursive Cooley-Tukey algorithm
  *
- * @link from https://rosettacode.org/wiki/Fast_Fourier_transform
+ * from
+ * @see <a href="https://rosettacode.org/wiki/Fast_Fourier_transform">rosetta code</a>
  */
 public class CooleyTukeyRecursiveFFT implements FastFourierTransform {
 

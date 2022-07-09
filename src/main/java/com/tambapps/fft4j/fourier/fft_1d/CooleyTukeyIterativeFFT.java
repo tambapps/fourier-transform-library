@@ -10,7 +10,7 @@ import com.tambapps.fft4j.fourier.util.Utils;
  * The computation is made in the given vector
  * (not very precise for large 2D arrays)
  *
- * @link from https://rosettacode.org/wiki/Fast_Fourier_transform#Java
+ * @see <a href="https://rosettacode.org/wiki/Fast_Fourier_transform#Java">rosetta code</a>
  */
 public class CooleyTukeyIterativeFFT implements FastFourierTransform {
 
