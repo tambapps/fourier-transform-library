@@ -1,7 +1,7 @@
 
 # Java Fourier Transform Library
 
-This is a library for computing 1-2 dimensional Fourier Transform. It was written with Java 8 
+This is a library for computing 1-2 dimensional Fourier Transform. It was written with Java 16 (re-writting is ongoing)
 **without any compile dependencies**. 
 
 You can import it with maven.
@@ -18,7 +18,7 @@ You can consult the Javadoc [here](https://tambapps.github.io/fourier-transform-
 ## 1D Fast Fourier Transform
 Here is an example of a 1D fast fourier transform. There are several algorithms to perform FFT
 You can see all of them on the FourierAlgorithms class.
-```java
+```groovy
 CVector input = new ArrayCVector(N);
 fill(input); //fill the array with whatever you like
 CVector result = new ArrayCVector(input.getSize());
@@ -29,7 +29,7 @@ FourierAlgorithms.BASIC.compute(result);
 ## 2D Fast Fourier Transform
 You can apply 2D FFT with a FastFourierTransformer2D. You can change the algorithm used by the transformer
 to compute fft by setting the AlgorithmChooser.
-```java
+```groovy
 FastFourierTransformer2D transformer2D = new FastFourierTransformer2D(Executors.newFixedThreadPool(4));
 CArray2D array2D = new CArray2D(N, N);
 fillArray(array2D);
