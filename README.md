@@ -1,7 +1,8 @@
 
 # Java Fourier Transform Library
 
-This is a library for computing 1-2 dimensional Fourier Transform. It was written with Java 8
+This is a library for computing 1-2 dimensional Fourier Transform. It was written with Java 8 
+**without any compile dependencies**. 
 
 You can import it with maven.
 
