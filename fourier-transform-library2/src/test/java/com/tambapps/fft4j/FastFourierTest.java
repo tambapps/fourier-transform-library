@@ -4,9 +4,11 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertArrayEquals;
 
 public class FastFourierTest {
+
+  private static final double DELTA = 0.01d;
   private static final double[] INPUT_RE = new double[] {
       1d, 1d, 1d, 1d,
       0d, 0d, 0d, 0d
@@ -45,8 +47,8 @@ public class FastFourierTest {
     double[] outputIm = new double[inputRe.length];
     FastFourier.BASIC.transform(inputRe, inputIm, outputRe, outputIm);
 
-    assertDoubleArrayEquals(EXPECTED_RE, outputRe);
-    assertDoubleArrayEquals(EXPECTED_IM, outputIm);
+    assertArrayEquals(EXPECTED_RE, outputRe, DELTA);
+    assertArrayEquals(EXPECTED_IM, outputIm, DELTA);
   }
 
   @Test
@@ -58,8 +60,8 @@ public class FastFourierTest {
     double[] outputIm = new double[inputRe.length];
     FastFourier.ITERATIVE_COOLEY_TUKEY.transform(inputRe, inputIm, outputRe, outputIm);
 
-    assertDoubleArrayEquals(EXPECTED_RE, outputRe);
-    assertDoubleArrayEquals(EXPECTED_IM, outputIm);
+    assertArrayEquals(EXPECTED_RE, outputRe, DELTA);
+    assertArrayEquals(EXPECTED_IM, outputIm, DELTA);
   }
 
   @Test
@@ -71,8 +73,8 @@ public class FastFourierTest {
     double[] outputIm = new double[inputRe.length];
     FastFourier.RECURSIVE_COOLEY_TUKEY.transform(inputRe, inputIm, outputRe, outputIm);
 
-    assertDoubleArrayEquals(EXPECTED_RE, outputRe);
-    assertDoubleArrayEquals(EXPECTED_IM, outputIm);
+    assertArrayEquals(EXPECTED_RE, outputRe, DELTA);
+    assertArrayEquals(EXPECTED_IM, outputIm, DELTA);
   }
 
 
@@ -84,8 +86,8 @@ public class FastFourierTest {
     FastFourier.BASIC.inverse(re, im);
 
 
-    assertDoubleArrayEquals(INPUT_RE, re);
-    assertDoubleArrayEquals(INPUT_IM, im);
+    assertArrayEquals(INPUT_RE, re, DELTA);
+    assertArrayEquals(INPUT_IM, im, DELTA);
   }
 
   @Test
@@ -96,8 +98,8 @@ public class FastFourierTest {
     FastFourier.ITERATIVE_COOLEY_TUKEY.inverse(re, im);
 
 
-    assertDoubleArrayEquals(INPUT_RE, re);
-    assertDoubleArrayEquals(INPUT_IM, im);
+    assertArrayEquals(INPUT_RE, re, DELTA);
+    assertArrayEquals(INPUT_IM, im, DELTA);
   }
 
   @Test
@@ -108,16 +110,9 @@ public class FastFourierTest {
     FastFourier.RECURSIVE_COOLEY_TUKEY.inverse(re, im);
 
 
-    assertDoubleArrayEquals(INPUT_RE, re);
-    assertDoubleArrayEquals(INPUT_IM, im);
+    assertArrayEquals(INPUT_RE, re, DELTA);
+    assertArrayEquals(INPUT_IM, im, DELTA);
+
   }
 
-  private void assertDoubleArrayEquals(double[] expected, double[] actual) {
-    for (int i = 0; i < expected.length; i++) {
-      if (Math.abs(expected[i] - actual[i]) > 0.01d) {
-        fail(String.format("Array are not similar. Expected %s but got %s",
-            Arrays.toString(expected), Arrays.toString(actual)));
-      }
-    }
-  }
 }
