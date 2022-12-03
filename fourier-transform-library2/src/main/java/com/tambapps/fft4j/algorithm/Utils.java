@@ -3,7 +3,7 @@ package com.tambapps.fft4j.algorithm;
 /**
  * Util class for handling 2-exponents
  */
-final class Utils {
+public final class Utils {
 
   private Utils() {
   }

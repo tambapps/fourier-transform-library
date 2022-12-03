@@ -1,5 +1,6 @@
 package com.tambapps.fft4j;
 
+import com.tambapps.fft4j.algorithm.Utils;
 import com.tambapps.fft4j.task.FourierInverseTask;
 import com.tambapps.fft4j.task.FourierTransformTask;
 import lombok.Setter;
@@ -16,8 +17,6 @@ public class FastFourier2dTransformer {
   private final int slicesCount;
   private final ExecutorService executorService;
 
-  @Setter
-  private FastFourierTransform fastFourierTransform = FastFourier.BEST;
 
   public FastFourier2dTransformer() {
     this(Runtime.getRuntime().availableProcessors() + 1);
@@ -33,6 +32,12 @@ public class FastFourier2dTransformer {
   }
 
   public void transform(Signal2d signal2d) {
+    FastFourierTransform fastFourierTransform = Utils.is2Power(signal2d.getM()) && Utils.is2Power(signal2d.getN()) ?
+        FastFourier.RECURSIVE_COOLEY_TUKEY :
+        FastFourier.BASIC;
+    transform(signal2d, fastFourierTransform);
+  }
+  public void transform(Signal2d signal2d, FastFourierTransform fastFourierTransform) {
     List<Future<?>> futures = new ArrayList<>();
     int count = signal2d.getM();
     int threadHandledTasksCount = (int) (((float)count) * ((float) slicesCount - 1)/ ((float) slicesCount));
@@ -61,6 +66,13 @@ public class FastFourier2dTransformer {
   }
 
   public void inverse(Signal2d signal2d) {
+    FastFourierTransform fastFourierTransform = Utils.is2Power(signal2d.getM()) && Utils.is2Power(signal2d.getN()) ?
+        FastFourier.RECURSIVE_COOLEY_TUKEY :
+        FastFourier.BASIC;
+    inverse(signal2d, fastFourierTransform);
+  }
+
+  public void inverse(Signal2d signal2d, FastFourierTransform fastFourierTransform) {
     List<Future<?>> futures = new ArrayList<>();
     int count = signal2d.getM();
     int threadHandledTasksCount = (int) (((float)count) * ((float) slicesCount - 1)/ ((float) slicesCount));
