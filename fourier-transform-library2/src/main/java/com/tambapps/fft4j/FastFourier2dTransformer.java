@@ -32,53 +32,58 @@ public class FastFourier2dTransformer {
     this.executorService = executorService;
   }
 
-  public Signal2d transform(Signal2d input) {
-    Signal2d output = new Signal2d(input.getM(), input.getN());
-    if (input.getN() != output.getN() || input.getM() != output.getM()) {
-      throw new IllegalArgumentException("Input and output should have same dimensions");
-    }
-    transform(input, output);
-    return output;
-  }
-
-  public void transform(Signal2d input, Signal2d output) {
+  public void transform(Signal2d signal2d) {
     List<Future<?>> futures = new ArrayList<>();
-    int threadHandledTasksCount = (int) (((float)output.getM()) * ((float) slicesCount - 1)/ ((float) slicesCount));
+    int count = signal2d.getM();
+    int threadHandledTasksCount = (int) (((float)count) * ((float) slicesCount - 1)/ ((float) slicesCount));
     for (int i = 0; i < threadHandledTasksCount; i++) {
-      futures.add(executorService.submit(new FourierTransformTask(input.getRow(i), fastFourierTransform)));
+      futures.add(executorService.submit(new FourierTransformTask(signal2d.getRow(i), fastFourierTransform)));
+    }
+
+    // also make the main thread work
+    for (int i = threadHandledTasksCount; i < count; i++) {
+      new FourierTransformTask(signal2d.getRow(i), fastFourierTransform).run();
     }
 
     wait(futures);
 
-    threadHandledTasksCount = (int) (((float)output.getN()) * ((float) slicesCount - 1)/ ((float) slicesCount));
+    count = signal2d.getN();
+    threadHandledTasksCount = (int) (((float)count) * ((float) slicesCount - 1)/ ((float) slicesCount));
     for (int i = 0; i < threadHandledTasksCount; i++) {
-      futures.add(executorService.submit(new FourierTransformTask(input.getColumn(i), fastFourierTransform)));
+      futures.add(executorService.submit(new FourierTransformTask(signal2d.getColumn(i), fastFourierTransform)));
     }
 
+    // also make the main thread work
+    for (int i = threadHandledTasksCount; i < count; i++) {
+      new FourierTransformTask(signal2d.getColumn(i), fastFourierTransform).run();
+    }
     wait(futures);
   }
 
-  public Signal2d inverse(Signal2d input) {
-    Signal2d output = new Signal2d(input.getM(), input.getN());
-    if (input.getN() != output.getN() || input.getM() != output.getM()) {
-      throw new IllegalArgumentException("Input and output should have same dimensions");
-    }
-    inverse(input, output);
-    return output;
-  }
-
-  public void inverse(Signal2d input, Signal2d output) {
+  public void inverse(Signal2d signal2d) {
     List<Future<?>> futures = new ArrayList<>();
-    int threadHandledTasksCount = (int) (((float)output.getM()) * ((float) slicesCount - 1)/ ((float) slicesCount));
+    int count = signal2d.getM();
+    int threadHandledTasksCount = (int) (((float)count) * ((float) slicesCount - 1)/ ((float) slicesCount));
     for (int i = 0; i < threadHandledTasksCount; i++) {
-      futures.add(executorService.submit(new FourierInverseTask(input.getRow(i), fastFourierTransform)));
+      futures.add(executorService.submit(new FourierInverseTask(signal2d.getRow(i), fastFourierTransform)));
+    }
+
+    // also make the main thread work
+    for (int i = threadHandledTasksCount; i < count; i++) {
+      new FourierInverseTask(signal2d.getRow(i), fastFourierTransform).run();
     }
 
     wait(futures);
 
-    threadHandledTasksCount = (int) (((float)output.getN()) * ((float) slicesCount - 1)/ ((float) slicesCount));
+    count = signal2d.getN();
+    threadHandledTasksCount = (int) (((float)count) * ((float) slicesCount - 1)/ ((float) slicesCount));
     for (int i = 0; i < threadHandledTasksCount; i++) {
-      futures.add(executorService.submit(new FourierInverseTask(input.getColumn(i), fastFourierTransform)));
+      futures.add(executorService.submit(new FourierInverseTask(signal2d.getColumn(i), fastFourierTransform)));
+    }
+
+    // also make the main thread work
+    for (int i = threadHandledTasksCount; i < count; i++) {
+      new FourierInverseTask(signal2d.getColumn(i), fastFourierTransform).run();
     }
 
     wait(futures);
@@ -95,5 +100,6 @@ public class FastFourier2dTransformer {
         throw new RuntimeException(e);
       }
     }
+    futures.clear();
   }
 }

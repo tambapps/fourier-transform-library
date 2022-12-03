@@ -12,6 +12,6 @@ public class FourierInverseTask extends AbstractFourierTask {
   @Override
   protected void compute(FastFourierTransform fastFourier,
                          double[] inputRe, double[] inputIm, double[] outputRe, double[] outputIm) {
-    fastFourier.transform(inputRe, inputIm, outputRe, outputIm);
+    fastFourier.inverse(inputRe, inputIm, outputRe, outputIm);
   }
 }

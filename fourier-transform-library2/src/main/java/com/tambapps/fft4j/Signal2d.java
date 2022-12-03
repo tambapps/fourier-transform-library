@@ -2,10 +2,24 @@ package com.tambapps.fft4j;
 
 import lombok.AllArgsConstructor;
 
+import java.util.Arrays;
+
 public class Signal2d extends Signal {
 
   private final Column[] columns;
   private final Row[] rows;
+
+  public Signal2d(int M, int N, double[] re, double[] im) {
+    super(re, im);
+    columns = new Column[N];
+    rows = new Row[M];
+    for (int i = 0; i < columns.length; i++) {
+      columns[i] = new Column(i);
+    }
+    for (int i = 0; i < rows.length; i++) {
+      rows[i] = new Row(i);
+    }
+  }
 
   public Signal2d(int M, int N) {
     super(M * N);
@@ -62,6 +76,23 @@ public class Signal2d extends Signal {
    */
   public int getN() {
     return columns.length;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    if (!super.equals(o)) return false;
+    Signal2d signal2d = (Signal2d) o;
+    return getM() == signal2d.getM() && getN() == signal2d.getN();
+  }
+
+  @Override
+  public int hashCode() {
+    int result = super.hashCode();
+    result = 31 * result + Arrays.hashCode(columns);
+    result = 31 * result + Arrays.hashCode(rows);
+    return result;
   }
 
   @AllArgsConstructor

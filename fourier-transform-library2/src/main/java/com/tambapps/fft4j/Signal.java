@@ -2,6 +2,8 @@ package com.tambapps.fft4j;
 
 import lombok.Getter;
 
+import java.util.Arrays;
+
 public class Signal implements ISignal {
 
   @Getter
@@ -61,5 +63,20 @@ public class Signal implements ISignal {
   @Override
   public int getLength() {
     return re.length;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Signal signal = (Signal) o;
+    return Arrays.equals(re, signal.re) && Arrays.equals(im, signal.im);
+  }
+
+  @Override
+  public int hashCode() {
+    int result = Arrays.hashCode(re);
+    result = 31 * result + Arrays.hashCode(im);
+    return result;
   }
 }
