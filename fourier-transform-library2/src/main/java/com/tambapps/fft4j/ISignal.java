@@ -12,6 +12,19 @@ public interface ISignal {
 
   void setImAt(int i, double value);
 
+  default void setFrom(double[] re, double[] im) {
+    for (int i = 0; i < getLength(); i++) {
+      setReAt(i, re[i]);
+      setImAt(i, im[i]);
+    }
+  }
+  default void copyInto(double[] re, double[] im) {
+    for (int i = 0; i < getLength(); i++) {
+      re[i] = getReAt(i);
+      im[i] = getImAt(i);
+    }
+  }
+
   default void copyInto(ISignal signal) {
     for (int i = 0; i < getLength(); i++) {
       signal.setReAt(i, getReAt(i));

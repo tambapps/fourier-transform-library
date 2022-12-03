@@ -39,6 +39,13 @@ public class Signal2d extends Signal {
     return row * getN() + col;
   }
 
+  public ISignal getRow(int i) {
+    return rows[i];
+  }
+
+  public ISignal getColumn(int i) {
+    return columns[i];
+  }
   /**
    * Returns the number of rows
    *

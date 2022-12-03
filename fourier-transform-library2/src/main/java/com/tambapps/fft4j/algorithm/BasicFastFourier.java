@@ -18,15 +18,6 @@ public final class BasicFastFourier implements FastFourierTransform {
     transform(inputSignal.getRe(), inputSignal.getIm(), outputSignal.getRe(), outputSignal.getIm());
   }
 
-  @Override
-  public void transform(double[] re, double[] im) {
-    double[] outputRe = new double[re.length];
-    double[] outputIm = new double[re.length];
-    transform(re, im, outputRe, outputIm);
-    System.arraycopy(outputRe, 0, re, 0, re.length);
-    System.arraycopy(outputIm, 0, im, 0, re.length);
-  }
-
   public void transform(double[] inputRe, double[] outputRe, double[] outputIm) {
     transform(inputRe, new double[inputRe.length], outputRe, outputIm);
   }
