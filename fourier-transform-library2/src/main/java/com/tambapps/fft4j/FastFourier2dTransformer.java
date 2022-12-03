@@ -85,8 +85,12 @@ public class FastFourier2dTransformer {
     for (int i = threadHandledTasksCount; i < count; i++) {
       new FourierInverseTask(signal2d.getColumn(i), fastFourierTransform).run();
     }
-
     wait(futures);
+  }
+
+
+  public void shutdown() {
+    executorService.shutdown();
   }
 
   private void wait(List<Future<?>> futures) {
