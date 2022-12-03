@@ -3,9 +3,9 @@ package com.tambapps.fft4j.algorithm;
 import com.tambapps.fft4j.FastFourierTransform;
 import com.tambapps.fft4j.Signal;
 
-import static com.tambapps.fft4j.algorithm.Utils.checkSizes;
-import static com.tambapps.fft4j.algorithm.Utils.get2Exponent;
-import static com.tambapps.fft4j.algorithm.Utils.swap;
+import static com.tambapps.fft4j.FastFourierUtils.checkSizes;
+import static com.tambapps.fft4j.FastFourierUtils.get2Exponent;
+import static com.tambapps.fft4j.FastFourierUtils.swap;
 
 /**
  * Compute the 1D FFT in the given vector

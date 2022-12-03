@@ -1,9 +1,7 @@
 package com.tambapps.fft4j;
 
-import com.tambapps.fft4j.algorithm.Utils;
 import com.tambapps.fft4j.task.FourierInverseTask;
 import com.tambapps.fft4j.task.FourierTransformTask;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +30,7 @@ public class FastFourier2dTransformer {
   }
 
   public void transform(Signal2d signal2d) {
-    FastFourierTransform fastFourierTransform = Utils.is2Power(signal2d.getM()) && Utils.is2Power(signal2d.getN()) ?
+    FastFourierTransform fastFourierTransform = FastFourierUtils.is2Power(signal2d.getM()) && FastFourierUtils.is2Power(signal2d.getN()) ?
         FastFourier.RECURSIVE_COOLEY_TUKEY :
         FastFourier.BASIC;
     transform(signal2d, fastFourierTransform);
@@ -66,7 +64,7 @@ public class FastFourier2dTransformer {
   }
 
   public void inverse(Signal2d signal2d) {
-    FastFourierTransform fastFourierTransform = Utils.is2Power(signal2d.getM()) && Utils.is2Power(signal2d.getN()) ?
+    FastFourierTransform fastFourierTransform = FastFourierUtils.is2Power(signal2d.getM()) && FastFourierUtils.is2Power(signal2d.getN()) ?
         FastFourier.RECURSIVE_COOLEY_TUKEY :
         FastFourier.BASIC;
     inverse(signal2d, fastFourierTransform);

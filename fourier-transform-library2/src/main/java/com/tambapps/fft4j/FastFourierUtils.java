@@ -1,11 +1,11 @@
-package com.tambapps.fft4j.algorithm;
+package com.tambapps.fft4j;
 
 /**
  * Util class for handling 2-exponents
  */
-public final class Utils {
+public final class FastFourierUtils {
 
-  private Utils() {
+  private FastFourierUtils() {
   }
 
   /**

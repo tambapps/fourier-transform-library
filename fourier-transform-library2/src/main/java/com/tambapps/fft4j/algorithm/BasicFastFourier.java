@@ -3,7 +3,7 @@ package com.tambapps.fft4j.algorithm;
 import com.tambapps.fft4j.FastFourierTransform;
 import com.tambapps.fft4j.Signal;
 
-import static com.tambapps.fft4j.algorithm.Utils.checkSizes;
+import static com.tambapps.fft4j.FastFourierUtils.checkSizes;
 
 public final class BasicFastFourier implements FastFourierTransform {
 
