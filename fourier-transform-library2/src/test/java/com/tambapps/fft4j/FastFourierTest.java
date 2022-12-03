@@ -1,8 +1,5 @@
 package com.tambapps.fft4j;
 
-import com.tambapps.fft4j.algorithm.BasicFastFourier;
-import com.tambapps.fft4j.algorithm.IterativeCooleyTukeyFastFourier;
-import com.tambapps.fft4j.algorithm.RecursiveCooleyTukeyFastFourier;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -46,7 +43,7 @@ public class FastFourierTest {
 
     double[] outputRe = new double[inputRe.length];
     double[] outputIm = new double[inputRe.length];
-    BasicFastFourier.transform(inputRe, inputIm, outputRe, outputIm);
+    FastFourier.BASIC.transform(inputRe, inputIm, outputRe, outputIm);
 
     assertDoubleArrayEquals(EXPECTED_RE, outputRe);
     assertDoubleArrayEquals(EXPECTED_IM, outputIm);
@@ -59,7 +56,7 @@ public class FastFourierTest {
 
     double[] outputRe = new double[inputRe.length];
     double[] outputIm = new double[inputRe.length];
-    IterativeCooleyTukeyFastFourier.transform(inputRe, inputIm, outputRe, outputIm);
+    FastFourier.ITERATIVE_COOLEY_TUKEY.transform(inputRe, inputIm, outputRe, outputIm);
 
     assertDoubleArrayEquals(EXPECTED_RE, outputRe);
     assertDoubleArrayEquals(EXPECTED_IM, outputIm);
@@ -72,7 +69,7 @@ public class FastFourierTest {
 
     double[] outputRe = new double[inputRe.length];
     double[] outputIm = new double[inputRe.length];
-    RecursiveCooleyTukeyFastFourier.transform(inputRe, inputIm, outputRe, outputIm);
+    FastFourier.RECURSIVE_COOLEY_TUKEY.transform(inputRe, inputIm, outputRe, outputIm);
 
     assertDoubleArrayEquals(EXPECTED_RE, outputRe);
     assertDoubleArrayEquals(EXPECTED_IM, outputIm);
@@ -84,7 +81,7 @@ public class FastFourierTest {
     double[] re = Arrays.copyOf(EXPECTED_RE, INPUT_RE.length);
     double[] im = Arrays.copyOf(EXPECTED_IM, INPUT_RE.length);
 
-    BasicFastFourier.inverse(re, im);
+    FastFourier.BASIC.inverse(re, im);
 
 
     assertDoubleArrayEquals(INPUT_RE, re);
@@ -96,7 +93,7 @@ public class FastFourierTest {
     double[] re = Arrays.copyOf(EXPECTED_RE, INPUT_RE.length);
     double[] im = Arrays.copyOf(EXPECTED_IM, INPUT_RE.length);
 
-    IterativeCooleyTukeyFastFourier.inverse(re, im);
+    FastFourier.ITERATIVE_COOLEY_TUKEY.inverse(re, im);
 
 
     assertDoubleArrayEquals(INPUT_RE, re);
@@ -108,7 +105,7 @@ public class FastFourierTest {
     double[] re = Arrays.copyOf(EXPECTED_RE, INPUT_RE.length);
     double[] im = Arrays.copyOf(EXPECTED_IM, INPUT_RE.length);
 
-    RecursiveCooleyTukeyFastFourier.inverse(re, im);
+    FastFourier.RECURSIVE_COOLEY_TUKEY.inverse(re, im);
 
 
     assertDoubleArrayEquals(INPUT_RE, re);

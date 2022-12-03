@@ -54,10 +54,7 @@ public class Signal implements ISignal {
       System.arraycopy(re, 0, signal.re, 0, getLength());
       System.arraycopy(im, 0, signal.im, 0, getLength());
     } else {
-      for (int i = 0; i < getLength(); i++) {
-        s.setReAt(i, getReAt(i));
-        s.setImAt(i, getImAt(i));
-      }
+      ISignal.super.copyInto(s);
     }
   }
 

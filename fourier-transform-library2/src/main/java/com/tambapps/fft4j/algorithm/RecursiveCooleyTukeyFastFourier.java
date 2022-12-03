@@ -1,9 +1,7 @@
 package com.tambapps.fft4j.algorithm;
 
+import com.tambapps.fft4j.FastFourierTransform;
 import com.tambapps.fft4j.Signal;
-
-import static com.tambapps.fft4j.algorithm.Utils.inverseEnd;
-import static com.tambapps.fft4j.algorithm.Utils.inverseStart;
 
 /**
  * Compute the 1D FFT in the given vector
@@ -13,52 +11,25 @@ import static com.tambapps.fft4j.algorithm.Utils.inverseStart;
  *
  * @see <a href="https://rosettacode.org/wiki/Fast_Fourier_transform#Java">rosetta code</a>
  */
-public final class RecursiveCooleyTukeyFastFourier {
+public final class RecursiveCooleyTukeyFastFourier implements FastFourierTransform {
+  
 
-  private RecursiveCooleyTukeyFastFourier() {}
-
-  public static void inverse(Signal input, Signal output) {
-    inverse(input.getRe(), input.getIm(), output.getRe(), output.getIm());
-  }
-
-  public static Signal inverse(Signal signal) {
-    Signal output = new Signal(signal.getLength());
-    inverse(signal.getRe(), signal.getIm(), output.getRe(), output.getIm());
-    return output;
-  }
-
-  public static void inverse(double[] inputRe, double[] inputIm, double[] outputRe, double[] outputIm) {
-    System.arraycopy(inputRe, 0, outputRe, 0, inputRe.length);
-    System.arraycopy(inputIm, 0, outputIm, 0, inputRe.length);
-    inverse(outputRe, outputIm);
-  }
-
-  public static void inverse(double[] re, double[] im) {
-    inverseStart(re, im);
-    transform(re, im);
-    inverseEnd(re, im);
-  }
-
-  public static void transform(double[] inputRe, double[] outputRe, double[] outputIm) {
+  public void transform(double[] inputRe, double[] outputRe, double[] outputIm) {
     transform(inputRe, new double[inputRe.length], outputRe, outputIm);
   }
 
-  public static void transform(double[] inputRe, double[] inputIm, double[] outputRe, double[] outputIm) {
+  @Override
+  public void transform(double[] inputRe, double[] inputIm, double[] outputRe, double[] outputIm) {
    transform(new Signal(inputRe, inputIm), new Signal(outputRe, outputIm));
   }
 
-  public static void transform(double[] re, double[] im) {
-    Signal output = transform(new Signal(re, im));
-    System.arraycopy(output.getRe(), 0, re, 0, re.length);
-    System.arraycopy(output.getIm(), 0, im, 0, re.length);
-  }
-
-  public static void transform(Signal inputSignal, Signal outputSignal) {
+  public void transform(Signal inputSignal, Signal outputSignal) {
     Signal realOutput = transform(inputSignal);
     realOutput.copyInto(outputSignal);
   }
 
-  public static Signal transform(Signal signal) {
+  @Override
+  public Signal transform(Signal signal) {
     int N = signal.getLength();
     if (N <= 1) {
       return signal;

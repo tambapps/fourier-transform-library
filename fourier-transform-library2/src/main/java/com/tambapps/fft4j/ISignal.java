@@ -12,7 +12,12 @@ public interface ISignal {
 
   void setImAt(int i, double value);
 
-  void copyInto(ISignal signal);
+  default void copyInto(ISignal signal) {
+    for (int i = 0; i < getLength(); i++) {
+      signal.setReAt(i, getReAt(i));
+      signal.setImAt(i, getImAt(i));
+    }
+  }
 
   int getLength();
 }

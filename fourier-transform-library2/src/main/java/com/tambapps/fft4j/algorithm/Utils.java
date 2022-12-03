@@ -61,18 +61,4 @@ final class Utils {
     }
   }
 
-  public static void inverseStart(double[] re, double[] im) {
-    for (int i = 0; i < re.length; i++) {
-      im[i] = - im[i];
-    }
-  }
-
-  public static void inverseEnd(double[] re, double[] im) {
-    double iN = 1d / ((double) re.length);
-    for (int i = 0; i < re.length; i++) {
-      re[i] = re[i] * iN;
-      im[i] = -im[i] * iN;
-    }
-  }
-
 }
