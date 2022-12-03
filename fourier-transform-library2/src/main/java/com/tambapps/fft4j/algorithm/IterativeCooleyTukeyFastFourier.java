@@ -1,6 +1,6 @@
 package com.tambapps.fft4j.algorithm;
 
-import com.tambapps.fft4j.FastFourierTransform;
+import com.tambapps.fft4j.FastFourier;
 import com.tambapps.fft4j.Signal;
 
 import static com.tambapps.fft4j.FastFourierUtils.checkSizes;
@@ -14,7 +14,7 @@ import static com.tambapps.fft4j.FastFourierUtils.swap;
  *
  * @see <a href="https://rosettacode.org/wiki/Fast_Fourier_transform#Java">rosetta code</a>
  */
-public final class IterativeCooleyTukeyFastFourier implements FastFourierTransform {
+public final class IterativeCooleyTukeyFastFourier implements FastFourier {
 
 
   @Override

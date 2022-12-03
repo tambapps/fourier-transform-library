@@ -1,6 +1,6 @@
 package com.tambapps.fft4j.algorithm;
 
-import com.tambapps.fft4j.FastFourierTransform;
+import com.tambapps.fft4j.FastFourier;
 import com.tambapps.fft4j.Signal;
 
 /**
@@ -11,7 +11,7 @@ import com.tambapps.fft4j.Signal;
  *
  * @see <a href="https://rosettacode.org/wiki/Fast_Fourier_transform#Java">rosetta code</a>
  */
-public final class RecursiveCooleyTukeyFastFourier implements FastFourierTransform {
+public final class RecursiveCooleyTukeyFastFourier implements FastFourier {
   
 
   public void transform(double[] inputRe, double[] outputRe, double[] outputIm) {

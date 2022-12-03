@@ -6,13 +6,13 @@ import org.junit.Test;
 
 import java.util.Random;
 
-public class FastFourier2dTransformerTest {
+public class FastFourier2dTest {
 
   private static final double DELTA = 0.01d;
 
   private final static double LIMIT = 1024d;
 
-  private final FastFourier2dTransformer transformer2D = new FastFourier2dTransformer();
+  private final FastFourier2d transformer2D = new FastFourier2d();
 
   @Test
   public void testSuccess() {

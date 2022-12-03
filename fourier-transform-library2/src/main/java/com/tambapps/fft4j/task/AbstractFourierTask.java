@@ -1,6 +1,6 @@
 package com.tambapps.fft4j.task;
 
-import com.tambapps.fft4j.FastFourierTransform;
+import com.tambapps.fft4j.FastFourier;
 import com.tambapps.fft4j.ISignal;
 import lombok.AllArgsConstructor;
 
@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 public abstract class AbstractFourierTask implements Runnable {
 
   private final ISignal signal;
-  private final FastFourierTransform fastFourier;
+  private final FastFourier fastFourier;
 
   @Override
   public void run() {
@@ -23,6 +23,6 @@ public abstract class AbstractFourierTask implements Runnable {
     signal.setFrom(outputRe, outputIm);
   }
 
-  protected abstract void compute(FastFourierTransform fastFourier, double[] inputRe, double[] inputIm,
-                                    double[] outputRe, double[] outputIm);
+  protected abstract void compute(FastFourier fastFourier, double[] inputRe, double[] inputIm,
+                                  double[] outputRe, double[] outputIm);
 }
