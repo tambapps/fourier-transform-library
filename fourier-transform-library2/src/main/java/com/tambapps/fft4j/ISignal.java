@@ -10,6 +10,11 @@ public interface ISignal {
 
   void setReAt(int i, double value);
 
+  default void setAt(int i, double re, double im) {
+    setReAt(i, re);
+    setImAt(i, im);
+  }
+
   void setImAt(int i, double value);
 
   default void setFrom(double[] re, double[] im) {

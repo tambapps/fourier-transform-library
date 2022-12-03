@@ -41,6 +41,12 @@ public class Signal2d extends Signal {
     return getImAt(getIndex(row, col));
   }
 
+  public void setAt(int row, int col, double re, double im) {
+    int i = getIndex(row, col);
+    setReAt(i, re);
+    setImAt(i, im);
+  }
+
   public void setReAt(int row, int col, double value) {
     setReAt(getIndex(row, col), value);
   }
