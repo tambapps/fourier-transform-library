@@ -39,11 +39,11 @@ public class FastFourier2dTransformerTest {
 
   @Test
   public void test() {
-    double[] inputRe =  new double[] {
+    double[] inputRe = new double[] {
         1d, 1d, 1d, 1d,
         0d, 0d, 0d, 0d
-    };;
-    double[] inputIm =  new double[] {
+    };
+    double[] inputIm = new double[] {
         0d, 0d, 0d, 0d,
         0d, 0d, 0d, 0d
     };
@@ -73,5 +73,16 @@ public class FastFourier2dTransformerTest {
     };
     assertArrayEquals(expectedRe, signal2d.getRe(), DELTA);
     assertArrayEquals(expectedIm, signal2d.getIm(), DELTA);
+
+    transformer2D.inverse(signal2d);
+
+    assertArrayEquals(new double[] {
+        1d, 1d, 1d, 1d,
+        0d, 0d, 0d, 0d
+    }, signal2d.getRe(), DELTA);
+    assertArrayEquals(new double[] {
+        0d, 0d, 0d, 0d,
+        0d, 0d, 0d, 0d
+    }, signal2d.getIm(), DELTA);
   }
 }
