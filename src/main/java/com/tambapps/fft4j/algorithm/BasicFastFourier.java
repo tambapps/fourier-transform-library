@@ -5,6 +5,9 @@ import com.tambapps.fft4j.Signal;
 
 import static com.tambapps.fft4j.FastFourierUtils.checkSizes;
 
+/**
+ * Basic implementation of the fast fourier algorithm, based on the basic Fourier transform formula
+ */
 public final class BasicFastFourier implements FastFourier {
 
   @Override
@@ -22,20 +25,20 @@ public final class BasicFastFourier implements FastFourier {
     transform(inputRe, new double[inputRe.length], outputRe, outputIm);
   }
 
-    /**
-     * Compute the fast fourier transform in a basic way, like in the basic formula
-     *
-     * @param inputRe the real parts of input
-     * @param inputIm the imaginary parts of input
-     * @param outputRe the real parts of output
-     * @param outputIm the imaginary partss of output
-     */
+  /**
+   * Compute the fast fourier transform in a basic way, like in the basic formula
+   *
+   * @param inputRe  the real parts of input
+   * @param inputIm  the imaginary parts of input
+   * @param outputRe the real parts of output
+   * @param outputIm the imaginary partss of output
+   */
   public void transform(double[] inputRe, double[] inputIm, double[] outputRe, double[] outputIm) {
     checkSizes(inputRe, inputIm, outputRe, outputIm);
     int size = inputRe.length;
     double N = size;
-    double[] temp = new double[] {0.0, 0.0};
-    double[] temp2 = new double[] {0.0, 0.0};
+    double[] temp = new double[]{0.0, 0.0};
+    double[] temp2 = new double[]{0.0, 0.0};
 
     for (int k = 0; k < size; k++) {
       outputRe[k] = 0d;

@@ -5,6 +5,9 @@ import com.tambapps.fft4j.FastFourier;
 import com.tambapps.fft4j.Signal;
 import com.tambapps.fft4j.FastFourierUtils;
 
+/**
+ * Uses the most efficient fourier algorithm given the input
+ */
 public class BestFastFourier implements FastFourier {
   @Override
   public void transform(double[] inputRe, double[] inputIm, double[] outputRe, double[] outputIm) {

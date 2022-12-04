@@ -5,7 +5,13 @@ import com.tambapps.fft4j.algorithm.BestFastFourier;
 import com.tambapps.fft4j.algorithm.IterativeCooleyTukeyFastFourier;
 import com.tambapps.fft4j.algorithm.RecursiveCooleyTukeyFastFourier;
 
-public class FastFouriers {
+/**
+ * Handy class to perform fourier transform/inverse with different algorithm
+ */
+public final class FastFouriers {
+
+  private FastFouriers() {
+  }
 
   public static final FastFourier BEST = new BestFastFourier();
   public static final FastFourier BASIC = new BasicFastFourier();

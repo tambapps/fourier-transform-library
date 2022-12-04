@@ -12,7 +12,6 @@ import com.tambapps.fft4j.Signal;
  * @see <a href="https://rosettacode.org/wiki/Fast_Fourier_transform#Java">rosetta code</a>
  */
 public final class RecursiveCooleyTukeyFastFourier implements FastFourier {
-  
 
   public void transform(double[] inputRe, double[] outputRe, double[] outputIm) {
     transform(inputRe, new double[inputRe.length], outputRe, outputIm);
@@ -20,7 +19,7 @@ public final class RecursiveCooleyTukeyFastFourier implements FastFourier {
 
   @Override
   public void transform(double[] inputRe, double[] inputIm, double[] outputRe, double[] outputIm) {
-   transform(new Signal(inputRe, inputIm), new Signal(outputRe, outputIm));
+    transform(new Signal(inputRe, inputIm), new Signal(outputRe, outputIm));
   }
 
   public void transform(Signal inputSignal, Signal outputSignal) {

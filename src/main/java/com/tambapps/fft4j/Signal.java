@@ -4,6 +4,9 @@ import lombok.Getter;
 
 import java.util.Arrays;
 
+/**
+ * Base class for a signal
+ */
 public class Signal implements ISignal {
 
   @Getter
@@ -11,13 +14,30 @@ public class Signal implements ISignal {
   @Getter
   final double[] im;
 
+  /**
+   * Constructs a signal with the provided length
+   *
+   * @param length the length of the signal
+   */
   public Signal(int length) {
     this(new double[length]);
   }
+
+  /**
+   * Constructs a signal with the provided real parts. All imaginary parts are set to 0
+   *
+   * @param re the real parts
+   */
   public Signal(double[] re) {
     this(re, new double[re.length]);
   }
 
+  /**
+   * Constructs a signal with the provided real and imaginary parts.
+   *
+   * @param re the real parts
+   * @param im the imaginary parts
+   */
   public Signal(double[] re, double[] im) {
     this.re = re;
     this.im = im;
