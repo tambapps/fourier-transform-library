@@ -4,7 +4,7 @@
 This is a library for computing 1-2 dimensional Fourier Transform. It was written with Java 8 (re-writting is ongoing)
 **without any compile dependencies**. 
 
-You can import it with maven.
+You can import it with maven (for now only the legacy 1.0 release is published to Maven Central. I'll publish soon a new release).
 
 If you are more familiar with the old implementation (version 1.0), consult the [legacy branch](https://github.com/tambapps/fourier-transform-library/tree/legacy)
 ```xml
@@ -15,67 +15,56 @@ If you are more familiar with the old implementation (version 1.0), consult the 
 </dependency>
 ```
 
-TODO update README
-## 1D Fast Fourier Transform
+## Fast Fourier Transform
 Here is an example of a 1D fast fourier transform. There are several algorithms to perform FFT
 You can see all of them on the FourierAlgorithms class.
 ```groovy
-CVector input = new ArrayCVector(N);
-fill(input); //fill the array with whatever you like
-CVector result = new ArrayCVector(input.getSize());
-CVectorUtils.copy(input, result);
-FourierAlgorithms.BASIC.compute(result);
+double[] inputRe = inputDataRe();
+double[] inputIm = inputDataIm();
+
+double[] outputRe = new double[inputRe.length];
+double[] outputIm = new double[inputRe.length];
+
+FastFouriers.BASIC.transform(inputRe, inputIm, outputRe, outputIm);
+
+// consult result in outputRe and outputIm
 ```
+
+You can also use a `Signal` which encapsulates a real and imaginary double arrays.
+
+```groovy
+Signal input = inputData();
+Signal output = FastFouriers.BASIC.transform(input);
+```
+
+3 different Fast Fourier Algorithms were implemented
+
+### Basic
+This is a trivial implementation of a Fourier Transform using the basic Fourier Transform formula
+
+### Recursive Cooley–Tukey
+
+A recursive implementation of the [Cooley–Tukey FFT algorithm](https://en.wikipedia.org/wiki/Cooley%E2%80%93Tukey_FFT_algorithm)
+
+### Iterative Cooley–Tukey
+
+An iterative implementation of the [Cooley–Tukey FFT algorithm](https://en.wikipedia.org/wiki/Cooley%E2%80%93Tukey_FFT_algorithm)
+
 
 ## 2D Fast Fourier Transform
 You can apply 2D FFT with a FastFourierTransformer2D. You can change the algorithm used by the transformer
 to compute fft by setting the AlgorithmChooser.
 ```groovy
-FastFourierTransformer2D transformer2D = new FastFourierTransformer2D(Executors.newFixedThreadPool(4));
-CArray2D array2D = new CArray2D(N, N);
-fillArray(array2D);
+Signal2d signal2d = new Signal2d(M, N);
+fill(signal2d);
 
-transformer2D.transform(array2D);
+FastFourier2d transformer2D = new FastFourier2d();
+transformer2D.transform(signal2d);
+// do some things with the fourier transform
+transformer2D.inverse(signal2d);
 
-FFTUtils.changeCenter(array2D);
-Filters.threshold(200, true).apply(array2D);
-displayArray(array2D); //display with whatever framework the array2D
-
-transformer2D.inverse(array2D);
-displayArray(array2D);
-```
-## Filters
-There are many filters implemented in the `Filters` class. If you want to implement your own, just extends `AbstractFilter`.
-
-
-## Change center
-If you want to display an FFT, it can be useful to change the center. There is the function `FFTUtils.changeCenter(array)` for that.
-
-## Groovy friendly
-the CArray2D and other classes have functions that define operator in groovy. Here is an example of groovy code
-
-```groovy
-def vector = new CVector(N)
-init(vector)
-FourierAlgorithms.BASIC(vector)
-display(vector)
-for(int i = 0; i < vector.size ; i++) {
-  println vector[i]
-}
-```
-
-```groovy
-def array = new ArrayCVector(N, M)
-init(array)
-for(int i = 0; i < array.M ; i++) {
-  for(int j = 0; i < array.N ; i++) {
-    println array[i][j]
-  }
-}
-display(array)
-def recFilter = Filters.rectangle(size, size, true)
-recFilter(array)
-display(array)
+// don't forget to shut it down as it uses an executor service
+transformer2D.shutdown();
 ```
 
 ## Example use case
