@@ -96,8 +96,8 @@ public class Signal2d extends Signal {
   @Override
   public int hashCode() {
     int result = super.hashCode();
-    result = 31 * result + Arrays.hashCode(columns);
-    result = 31 * result + Arrays.hashCode(rows);
+    result = 31 * result + getM();
+    result = 31 * result + getN();
     return result;
   }
 
