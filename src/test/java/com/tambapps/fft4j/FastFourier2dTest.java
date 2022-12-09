@@ -1,10 +1,10 @@
 package com.tambapps.fft4j;
 
-import static org.junit.Assert.assertArrayEquals;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Random;
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class FastFourier2dTest {
 
@@ -31,8 +31,8 @@ public class FastFourier2dTest {
     transformer2D.transform(array2D);
     transformer2D.inverse(array2D);
 
-    assertArrayEquals("Should be equal",originArray.getRe(), array2D.getRe(), DELTA);
-    assertArrayEquals("Should be equal",originArray.getIm(), array2D.getIm(), DELTA);
+    assertArrayEquals(originArray.getRe(), array2D.getRe(), DELTA, "Should be equal");
+    assertArrayEquals(originArray.getIm(), array2D.getIm(), DELTA, "Should be equal");
 
   }
 

@@ -1,8 +1,8 @@
 package com.tambapps.fft4j;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Signal2dTest {
   
@@ -27,8 +27,8 @@ public class Signal2dTest {
     }
 
     for (int j = 0; j < array.getM(); j++) {
-      assertEquals("Should be equal", valueReCol, array.getReAt(j, array.getN() / 2), DELTA);
-      assertEquals("Should be equal", valueImCol, array.getImAt(j, array.getN() / 2), DELTA);
+      assertEquals(valueReCol, array.getReAt(j, array.getN() / 2), DELTA, "Should be equal");
+      assertEquals(valueImCol, array.getImAt(j, array.getN() / 2), DELTA, "Should be equal");
     }
 
     ISignal row = array.getRow(array.getM() / 2);
@@ -37,8 +37,8 @@ public class Signal2dTest {
     }
 
     for (int j = 0; j < array.getN(); j++) {
-      assertEquals("Should be equal", valueReRow, array.getReAt(array.getM() / 2, j), DELTA);
-      assertEquals("Should be equal", valueImRow, array.getImAt(array.getM() / 2, j), DELTA);
+      assertEquals(valueReRow, array.getReAt(array.getM() / 2, j), DELTA, "Should be equal");
+      assertEquals(valueImRow, array.getImAt(array.getM() / 2, j), DELTA, "Should be equal");
     }
   }
 
@@ -54,16 +54,16 @@ public class Signal2dTest {
     for (int j = 0; j < N; j++) {
       ISignal column = array.getColumn(j);
       for (int i = 0; i < M; i++) {
-        assertEquals("Should be equal", i, column.getReAt(i), DELTA);
-        assertEquals("Should be equal", j, column.getImAt(i), DELTA);
+        assertEquals(i, column.getReAt(i), DELTA, "Should be equal");
+        assertEquals(j, column.getImAt(i), DELTA, "Should be equal");
       }
     }
 
     for (int i = 0; i < M; i++) {
       ISignal row = array.getRow(i);
       for (int j = 0; j < N; j++) {
-        assertEquals("Should be equal", i, row.getReAt(j), DELTA);
-        assertEquals("Should be equal", j, row.getImAt(j), DELTA);
+        assertEquals(i, row.getReAt(j), DELTA, "Should be equal");
+        assertEquals(j, row.getImAt(j), DELTA, "Should be equal");
       }
     }
   }
