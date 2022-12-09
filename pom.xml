@@ -17,7 +17,7 @@
   <description>
     A library allowing to perform 1D/2D Fast Fourier Transform
   </description>
-  <url>https://tambapps.github.io/fourier-transform-library/</url>
+  <url>https://github.com/tambapps/fourier-transform-library</url>
   <build>
     <plugins>
       <plugin>
@@ -56,22 +56,49 @@
         </executions>
       </plugin>
     </plugins>
-    <resources>
-      <resource>
-        <directory>src/main/java</directory>
-      </resource>
-      <resource>
-        <directory>./</directory>
-        <targetPath>META-INF/</targetPath>
-        <filtering>false</filtering>
-        <includes>
-          <include>LICENSE</include>
-          <include>README.md</include>
-          <include>CHANGES</include>
-        </includes>
-      </resource>
-    </resources>
   </build>
+
+  <profiles>
+    <profile>
+      <id>release-sign-artifacts</id>
+      <activation>
+        <property>
+          <name>performRelease</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.6</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.owasp</groupId>
+            <artifactId>dependency-check-maven</artifactId>
+            <version>7.1.1</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>check</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
   <dependencies>
     <dependency>
@@ -93,14 +120,15 @@
       <name>FONKOUA Tambue Nelson</name>
       <email>tambapps@gmail.com</email>
       <organization>Tambapps</organization>
-      <organizationUrl>https://webiste-42a9e.firebaseapp.com/</organizationUrl>
+      <organizationUrl>https://github.com/tambapps</organizationUrl>
     </developer>
   </developers>
 
   <licenses>
     <license>
-      <name>MIT License</name>
-      <url>http://www.opensource.org/licenses/mit-license.php</url>
+      <name>Apache License, Version 2.0</name>
+      <url>https://raw.githubusercontent.com/tambapps/fourier-transform-library/master/LICENSE</url>
+      <distribution>repo</distribution>
     </license>
   </licenses>
 
