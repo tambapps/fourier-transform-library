@@ -1,8 +1,8 @@
 
 # Java Fourier Transform Library
 
-This is a library for computing 1-2 dimensional Fourier Transform. It was written with Java 8, and should be compatible on Android.
-**without any compile dependencies**. 
+This is a library for computing 1-2 dimensional Fourier Transform. It was written with Java 8, and should be Android-compatible (you can use it in an Android project).
+This library was written **without any compile dependencies**. 
 
 You can import it with maven.
 
@@ -17,10 +17,10 @@ If you are more familiar with the old implementation (version 1.0), consult the 
 
 ## Fast Fourier Transform
 Here is an example of a 1D fast fourier transform. There are several algorithms to perform FFT
-You can see all of them on the FourierAlgorithms class.
+You can see all of them on the FastFouriers class.
 ```groovy
-double[] inputRe = inputDataRe();
-double[] inputIm = inputDataIm();
+double[] inputRe = getInputDataRe();
+double[] inputIm = getInputDataIm();
 
 double[] outputRe = new double[inputRe.length];
 double[] outputIm = new double[inputRe.length];
@@ -44,11 +44,13 @@ This is a trivial implementation of a Fourier Transform using the basic Fourier 
 
 ### Recursive Cooley–Tukey
 
-A recursive implementation of the [Cooley–Tukey FFT algorithm](https://en.wikipedia.org/wiki/Cooley%E2%80%93Tukey_FFT_algorithm)
+A recursive implementation of the [Cooley–Tukey FFT algorithm](https://en.wikipedia.org/wiki/Cooley%E2%80%93Tukey_FFT_algorithm).
+Note that this algorithm requires the input length to be a power of 2.
 
 ### Iterative Cooley–Tukey
 
 An iterative implementation of the [Cooley–Tukey FFT algorithm](https://en.wikipedia.org/wiki/Cooley%E2%80%93Tukey_FFT_algorithm)
+Note that this algorithm requires the input length to be a power of 2.
 
 
 ## 2D Fast Fourier Transform
@@ -72,6 +74,4 @@ You can consult the [fft-image-processing repo](https://github.com/nelson888/fft
 ![fft-image-processing-screenshot-1](https://raw.githubusercontent.com/nelson888/fft-image-processing/master/screenshots/sample1.png)
 
 ![fft-image-processing-screenshot-2](https://raw.githubusercontent.com/nelson888/fft-image-processing/master/screenshots/sample2.png)
-## Web link
 
-[Link](https://tambapps.github.io/fourier-transform-library/)
